@@ -1,0 +1,13 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": [
+    "radtech:tin_ore",
+    "radtech:aluminum_ore",
+    "radtech:lithium_ore",
+    "radtech:neodymium_ore",
+    "radtech:titanium_ore",
+    "radtech:tungsten_ore"
+  ],
+  "step": "underground_ores"
+}

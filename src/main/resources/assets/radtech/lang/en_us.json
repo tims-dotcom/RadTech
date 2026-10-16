@@ -1,0 +1,16 @@
+{
+  "block.radtech.tin_ore": "Tin Ore",
+  "item.radtech.raw_tin": "Raw Tin",
+  "block.radtech.aluminum_ore": "Aluminum Ore",
+  "item.radtech.raw_aluminum": "Raw Aluminum",
+  "block.radtech.lithium_ore": "Lithium Ore",
+  "item.radtech.raw_lithium": "Raw Lithium",
+  "block.radtech.neodymium_ore": "Neodymium Ore",
+  "item.radtech.raw_neodymium": "Raw Neodymium",
+  "block.radtech.titanium_ore": "Titanium Ore",
+  "item.radtech.raw_titanium": "Raw Titanium",
+  "block.radtech.tungsten_ore": "Tungsten Ore",
+  "item.radtech.raw_tungsten": "Raw Tungsten",
+  "item.radtech.tin_ingot": "Tin Ingot",
+  "item.radtech.tin_nugget": "Tin Nugget"
+}

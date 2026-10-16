@@ -1,0 +1,25 @@
+{
+  "block.radtech.tin_ore": "Олов'яна руда",
+  "item.radtech.raw_tin": "Сире олово",
+  "item.radtech.tin_ingot": "Злиток олова",
+  "item.radtech.tin_nugget": "Шматочок олова",
+
+  "block.radtech.aluminum_ore": "Алюмінієва руда",
+  "item.radtech.raw_aluminum": "Сирий алюміній",
+
+
+  "block.radtech.lithium_ore": "Літієва руда",
+  "item.radtech.raw_lithium": "Сирий літій",
+
+  "block.radtech.neodymium_ore": "Неодимова руда",
+  "item.radtech.raw_neodymium": "Сирий неодим",
+
+  "block.radtech.titanium_ore": "Титанова руда",
+  "item.radtech.raw_titanium": "Сирий титан",
+
+  "block.radtech.tungsten_ore": "Вольфрамова руда",
+  "item.radtech.raw_tungsten": "Сирий вольфрам"
+
+
+
+}
