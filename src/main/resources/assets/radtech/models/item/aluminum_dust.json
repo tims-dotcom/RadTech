@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "radtech:item/raw_aluminum"
+    "layer0": "radtech:item/aluminum_dust"
   }
 }
