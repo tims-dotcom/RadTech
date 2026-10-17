@@ -18,6 +18,7 @@ import org.tim.radtech.registry.ModMenus
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.fml.loading.FMLEnvironment
 import org.tim.radtech.client.ClientEvents
+import org.tim.radtech.block.FurnaceBlock
 
 @Mod(Radtech.MODID)
 class Radtech(modEventBus: IEventBus) {
@@ -49,6 +50,13 @@ class Radtech(modEventBus: IEventBus) {
             BlockBehaviour.Properties.of().strength(3.0f, 3.0f).requiresCorrectToolForDrops()
         )
         val MACHINE_ITEM = ITEMS.registerSimpleBlockItem(MACHINE_BLOCK)
+
+        val FURNACE_BLOCK: DeferredBlock<FurnaceBlock> = BLOCKS.registerBlock(
+            "furnace",
+            { p -> FurnaceBlock(p) },
+            BlockBehaviour.Properties.of().strength(3.0f, 3.0f).requiresCorrectToolForDrops()
+        )
+        val FURNACE_ITEM = ITEMS.registerSimpleBlockItem(FURNACE_BLOCK)
     }
 
     init {
@@ -66,7 +74,7 @@ class Radtech(modEventBus: IEventBus) {
     private fun addCreative(event: BuildCreativeModeTabContentsEvent) {
         val content: List<ItemLike> = when (event.tabKey) {
             CreativeModeTabs.NATURAL_BLOCKS -> ORES.values.map { it.get() }
-            CreativeModeTabs.FUNCTIONAL_BLOCKS -> listOf(MACHINE_ITEM.get())
+            CreativeModeTabs.FUNCTIONAL_BLOCKS -> listOf(MACHINE_ITEM.get(), FURNACE_ITEM.get())
             CreativeModeTabs.INGREDIENTS ->
                 (RAW.values + INGOTS.values + TIN_NUGGET + DUSTS.values).map { it.get() }
             else -> return

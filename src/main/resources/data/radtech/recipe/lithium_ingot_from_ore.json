@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": [
+    { "item": "radtech:raw_lithium" },
+    { "item": "radtech:lithium_ore" }
+  ],
+  "result": { "id": "radtech:lithium_ingot" },
+  "experience": 0.7,
+  "cookingtime": 200
+}

@@ -63,7 +63,13 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
             "radtech:raw_lithium" to "radtech:lithium_dust",
             "radtech:raw_neodymium" to "radtech:neodymium_dust",
             "radtech:raw_titanium" to "radtech:titanium_dust",
-            "radtech:raw_tungsten" to "radtech:tungsten_dust"
+            "radtech:raw_tungsten" to "radtech:tungsten_dust",
+            "radtech:tin_ore" to "radtech:tin_dust",
+            "radtech:aluminum_ore" to "radtech:aluminum_dust",
+            "radtech:lithium_ore" to "radtech:lithium_dust",
+            "radtech:neodymium_ore" to "radtech:neodymium_dust",
+            "radtech:titanium_ore" to "radtech:titanium_dust",
+            "radtech:tungsten_ore" to "radtech:tungsten_dust"
         )
 
         fun tick(level: Level, pos: BlockPos, state: BlockState, be: MachineBlockEntity) {

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": [
+    { "item": "radtech:raw_titanium" },
+    { "item": "radtech:titanium_ore" }
+  ],
+  "result": { "id": "radtech:titanium_ingot" },
+  "experience": 0.7,
+  "cookingtime": 200
+}

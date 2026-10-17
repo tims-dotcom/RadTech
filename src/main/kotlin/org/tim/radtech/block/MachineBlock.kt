@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.entity.*
 import net.minecraft.world.level.block.state.*
 import net.minecraft.world.phys.BlockHitResult
 import org.tim.radtech.registry.ModBlockEntities
+import net.minecraft.world.Containers
 
 class MachineBlock(props: BlockBehaviour.Properties) : BaseEntityBlock(props) {
 
@@ -41,6 +42,17 @@ class MachineBlock(props: BlockBehaviour.Properties) : BaseEntityBlock(props) {
 
     override fun <T : BlockEntity> getTicker(level: Level, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
         createTickerHelper(type, ModBlockEntities.MACHINE.get()) { l, p, s, be -> MachineBlockEntity.tick(l, p, s, be) }
+
+    override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
+        if (!state.`is`(newState.block)) {
+            (level.getBlockEntity(pos) as? MachineBlockEntity)?.let { be ->
+                for (i in 0 until be.items.slots) {
+                    Containers.dropItemStack(level, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), be.items.getStackInSlot(i))
+                }
+            }
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston)
+    }
 
     companion object {
         val FACING = HorizontalDirectionalBlock.FACING
