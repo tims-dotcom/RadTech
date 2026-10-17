@@ -3,23 +3,26 @@
   "item.radtech.raw_tin": "Сире олово",
   "item.radtech.tin_ingot": "Злиток олова",
   "item.radtech.tin_nugget": "Шматочок олова",
-
   "block.radtech.aluminum_ore": "Алюмінієва руда",
   "item.radtech.raw_aluminum": "Сирий алюміній",
-
-
   "block.radtech.lithium_ore": "Літієва руда",
   "item.radtech.raw_lithium": "Сирий літій",
-
   "block.radtech.neodymium_ore": "Неодимова руда",
   "item.radtech.raw_neodymium": "Сирий неодим",
-
   "block.radtech.titanium_ore": "Титанова руда",
   "item.radtech.raw_titanium": "Сирий титан",
-
   "block.radtech.tungsten_ore": "Вольфрамова руда",
-  "item.radtech.raw_tungsten": "Сирий вольфрам"
-
-
-
+  "item.radtech.raw_tungsten": "Сирий вольфрам",
+  "block.radtech.crusher": "Дробилка",
+  "item.radtech.aluminum_ingot": "Алюмінієвий злиток",
+  "item.radtech.lithium_ingot": "Літієвий злиток",
+  "item.radtech.neodymium_ingot": "Неодимовий злиток",
+  "item.radtech.titanium_ingot": "Титановий злиток",
+  "item.radtech.tungsten_ingot": "Вольфрамовий злиток",
+  "item.radtech.tin_dust": "Олов'яний пил",
+  "item.radtech.aluminum_dust": "Алюмінієвий пил",
+  "item.radtech.lithium_dust": "Літієвий пил",
+  "item.radtech.neodymium_dust": "Неодимовий пил",
+  "item.radtech.titanium_dust": "Титановий пил",
+  "item.radtech.tungsten_dust": "Вольфрамовий пил"
 }

@@ -12,5 +12,17 @@
   "block.radtech.tungsten_ore": "Tungsten Ore",
   "item.radtech.raw_tungsten": "Raw Tungsten",
   "item.radtech.tin_ingot": "Tin Ingot",
-  "item.radtech.tin_nugget": "Tin Nugget"
+  "item.radtech.tin_nugget": "Tin Nugget",
+  "block.radtech.crusher": "Crusher",
+  "item.radtech.aluminum_ingot": "Aluminum Ingot",
+  "item.radtech.lithium_ingot": "Lithium Ingot",
+  "item.radtech.neodymium_ingot": "Neodymium Ingot",
+  "item.radtech.titanium_ingot": "Titanium Ingot",
+  "item.radtech.tungsten_ingot": "Tungsten Ingot",
+  "item.radtech.tin_dust": "Tin Dust",
+  "item.radtech.aluminum_dust": "Aluminum Dust",
+  "item.radtech.lithium_dust": "Lithium Dust",
+  "item.radtech.neodymium_dust": "Neodymium Dust",
+  "item.radtech.titanium_dust": "Titanium Dust",
+  "item.radtech.tungsten_dust": "Tungsten Dust"
 }

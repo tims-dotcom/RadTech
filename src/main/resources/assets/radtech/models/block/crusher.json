@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "radtech:block/crusher_base",
+    "north": "radtech:block/crusher_north",
+    "east": "radtech:block/crusher_base",
+    "south": "radtech:block/crusher_base",
+    "west": "radtech:block/crusher_west",
+    "up": "radtech:block/crusher_up",
+    "down": "radtech:block/crusher_base"
+  }
+}
