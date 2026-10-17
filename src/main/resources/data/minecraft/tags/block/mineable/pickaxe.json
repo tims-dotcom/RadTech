@@ -6,6 +6,7 @@
     "radtech:lithium_ore",
     "radtech:neodymium_ore",
     "radtech:titanium_ore",
-    "radtech:tungsten_ore"
+    "radtech:tungsten_ore",
+    "radtech:crusher"
   ]
 }
