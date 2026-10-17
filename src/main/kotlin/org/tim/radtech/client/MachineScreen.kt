@@ -14,6 +14,7 @@ class MachineScreen(menu: MachineMenu, inv: Inventory, title: Component, private
         g.blit(texture, leftPos, topPos, 0, 0, imageWidth, imageHeight)
         val w = menu.progress * 24 / menu.maxProgress
         g.blit(texture, leftPos + 79, topPos + 34, 176, 0, w, 17)
+        g.drawString(font, "${menu.progress}/${menu.maxProgress}", leftPos + 8, topPos + 60, 0x404040, false)
     }
 
     override fun render(g: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {

@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "radtech:block/furnace"},
+    "facing=east": {"model": "radtech:block/furnace", "y": 90},
+    "facing=south": {"model": "radtech:block/furnace", "y": 180},
+    "facing=west": {"model": "radtech:block/furnace", "y": 270}
+  }
+}

@@ -5,6 +5,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.registries.DeferredRegister
 import org.tim.radtech.Radtech
 import org.tim.radtech.block.MachineBlockEntity
+import net.neoforged.neoforge.registries.DeferredHolder
+import org.tim.radtech.block.FurnaceBlockEntity
 
 object ModBlockEntities {
     val TYPES: DeferredRegister<BlockEntityType<*>> =
@@ -14,6 +16,13 @@ object ModBlockEntities {
         BlockEntityType.Builder.of(
             BlockEntityType.BlockEntitySupplier { pos, state -> MachineBlockEntity(pos, state) },
             Radtech.MACHINE_BLOCK.get()
+        ).build(null)
+    }
+
+    val FURNACE: DeferredHolder<BlockEntityType<*>, BlockEntityType<FurnaceBlockEntity>> = TYPES.register("furnace") { ->
+        BlockEntityType.Builder.of(
+            BlockEntityType.BlockEntitySupplier { pos, state -> FurnaceBlockEntity(pos, state) },
+            Radtech.FURNACE_BLOCK.get()
         ).build(null)
     }
 }
