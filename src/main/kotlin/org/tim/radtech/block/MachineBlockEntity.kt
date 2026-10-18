@@ -16,6 +16,8 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.ItemStackHandler
+import org.tim.radtech.energy.PowerBuffer
+import org.tim.radtech.energy.VoltageTier
 import org.tim.radtech.menu.MachineMenu
 import org.tim.radtech.registry.ModBlockEntities
 
@@ -26,18 +28,30 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
         override fun onContentsChanged(slot: Int) = setChanged()
     }
 
+    val power = PowerBuffer(VoltageTier.LOW, CAPACITY, 5, 0)
+
     var progress = 0
     var maxProgress = 100
 
     val data = object : ContainerData {
-        override fun get(index: Int) = if (index == 0) progress else maxProgress
-        override fun set(index: Int, value: Int) {
-            if (index == 0) progress = value else maxProgress = value
+        override fun get(index: Int) = when (index) {
+            0 -> progress
+            1 -> maxProgress
+            2 -> (power.stored and 0x7FFFL).toInt()
+            else -> (power.stored shr 15).toInt()
         }
-        override fun getCount() = 2
+
+        override fun set(index: Int, value: Int) {
+            when (index) {
+                0 -> progress = value
+                1 -> maxProgress = value
+            }
+        }
+
+        override fun getCount() = 4
     }
 
-    fun canWork() = true
+    fun canWork() = power.stored >= USE_PER_TICK
 
     override fun getDisplayName(): Component = Component.translatable("block.radtech.crusher")
 
@@ -48,15 +62,20 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
         super.saveAdditional(tag, registries)
         tag.put("inv", items.serializeNBT(registries))
         tag.putInt("progress", progress)
+        power.save(tag)
     }
 
     override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
         items.deserializeNBT(registries, tag.getCompound("inv"))
         progress = tag.getInt("progress")
+        power.load(tag)
     }
 
     companion object {
+        const val CAPACITY = 120_000L
+        const val USE_PER_TICK = 60L
+
         private val RECIPES = mapOf(
             "radtech:raw_tin" to "radtech:tin_dust",
             "radtech:raw_aluminum" to "radtech:aluminum_dust",
@@ -78,7 +97,7 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
             val result = RECIPES[BuiltInRegistries.ITEM.getKey(input.item).toString()]
                 ?.let { BuiltInRegistries.ITEM.get(ResourceLocation.parse(it)) }
                 ?.let { ItemStack(it, 2) }
-            if (input.isEmpty || result == null || result.isEmpty || !be.canWork()) {
+            if (input.isEmpty || result == null || result.isEmpty) {
                 if (be.progress != 0) {
                     be.progress = 0
                     be.setChanged()
@@ -88,7 +107,8 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
             val out = be.items.getStackInSlot(1)
             val fits = out.isEmpty ||
                     (ItemStack.isSameItemSameComponents(out, result) && out.count + result.count <= out.maxStackSize)
-            if (!fits) return
+            if (!fits || !be.canWork()) return
+            be.power.consume(USE_PER_TICK)
             if (++be.progress >= be.maxProgress) {
                 be.progress = 0
                 be.items.extractItem(0, 1, false)

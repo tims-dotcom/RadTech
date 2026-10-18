@@ -19,6 +19,8 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.fml.loading.FMLEnvironment
 import org.tim.radtech.client.ClientEvents
 import org.tim.radtech.block.FurnaceBlock
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import org.tim.radtech.energy.PowerCapabilities
 
 @Mod(Radtech.MODID)
 class Radtech(modEventBus: IEventBus) {
@@ -59,6 +61,8 @@ class Radtech(modEventBus: IEventBus) {
         val FURNACE_ITEM = ITEMS.registerSimpleBlockItem(FURNACE_BLOCK)
     }
 
+
+
     init {
         BLOCKS.register(modEventBus)
         ITEMS.register(modEventBus)
@@ -68,7 +72,13 @@ class Radtech(modEventBus: IEventBus) {
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(ClientEvents::onRegisterScreens)
         }
+        modEventBus.addListener(::registerCapabilities)
+
         LOGGER.info("Radtech mod initialized!")
+    }
+
+    private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
+        event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.MACHINE.get()) { be, _ -> be.power }
     }
 
     private fun addCreative(event: BuildCreativeModeTabContentsEvent) {

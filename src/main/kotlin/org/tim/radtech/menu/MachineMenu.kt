@@ -13,10 +13,11 @@ class MachineMenu(id: Int, inv: Inventory, val be: MachineBlockEntity, val data:
     AbstractContainerMenu(ModMenus.MACHINE.get(), id) {
 
     constructor(id: Int, inv: Inventory, buf: FriendlyByteBuf) :
-            this(id, inv, inv.player.level().getBlockEntity(buf.readBlockPos()) as MachineBlockEntity, SimpleContainerData(2))
+            this(id, inv, inv.player.level().getBlockEntity(buf.readBlockPos()) as MachineBlockEntity, SimpleContainerData(4))
 
     val progress: Int get() = data.get(0)
     val maxProgress: Int get() = data.get(1).coerceAtLeast(1)
+    val energy: Long get() = (data.get(3).toLong() shl 15) or data.get(2).toLong()
 
     init {
         addSlot(SlotItemHandler(be.items, 0, 56, 35))
