@@ -13,7 +13,7 @@ import org.tim.radtech.menu.ThermalGeneratorMenu
 class ThermalGeneratorScreen(menu: ThermalGeneratorMenu, inv: Inventory, title: Component) :
     AbstractContainerScreen<ThermalGeneratorMenu>(menu, inv, title) {
 
-    private val energyBar = EnergyBar(30, 17, 10, 50)
+    private val energyBar = EnergyBar(19, 24, 12, 42)
 
     override fun renderBg(g: GuiGraphics, partialTick: Float, mouseX: Int, mouseY: Int) {
         g.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight)
@@ -23,6 +23,11 @@ class ThermalGeneratorScreen(menu: ThermalGeneratorMenu, inv: Inventory, title: 
             g.blit(TEXTURE, leftPos + FLAME_X, topPos + FLAME_Y + size - h, 176, size - h, size, h)
         }
         energyBar.render(g, leftPos, topPos, menu.stored, menu.capacity)
+    }
+
+    override fun renderLabels(g: GuiGraphics, mouseX: Int, mouseY: Int) {
+        g.drawString(font, title, 8, 7, 0xFFE0BB, false)
+        g.drawString(font, playerInventoryTitle, 8, 74, 0x8898B0, false)
     }
 
     override fun render(g: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
@@ -42,6 +47,6 @@ class ThermalGeneratorScreen(menu: ThermalGeneratorMenu, inv: Inventory, title: 
     private companion object {
         val TEXTURE: ResourceLocation = ResourceLocation.fromNamespaceAndPath("radtech", "textures/gui/thermal_generator.png")
         const val FLAME_X = 81
-        const val FLAME_Y = 36
+        const val FLAME_Y = 31
     }
 }

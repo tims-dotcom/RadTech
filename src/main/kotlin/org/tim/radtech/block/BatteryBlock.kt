@@ -56,14 +56,7 @@ class BatteryBlock(props: BlockBehaviour.Properties) : BaseEntityBlock(props) {
         if (!level.isClientSide) {
             val be = level.getBlockEntity(pos) as? BatteryBlockEntity
             if (be != null) {
-                val percent = if (be.power.capacity > 0) (be.power.stored * 100 / be.power.capacity) else 0
-                val status = if (state.getValue(OVERHEATED)) "§c[ПЕРЕГРІВ!]" else "§a[НОРМА]"
-                val ampsText = String.format("%.1f", be.lastAmps)
-                val msg = Component.literal(
-                    "§6Акумулятор: §e${PowerFormat.energy(be.power.stored)} / ${PowerFormat.energy(be.power.capacity)} " +
-                            "(§b${percent}%§e) | Струм: §a${ampsText} А §e| Тепло: §c${be.heatTicks}/80 §e| $status"
-                )
-                player.displayClientMessage(msg, true)
+                player.openMenu(be, pos)
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide)

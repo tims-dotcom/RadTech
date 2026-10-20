@@ -18,6 +18,8 @@ object PowerNetworks {
 
     fun markDirty(level: Level) = networks(level).markDirty()
 
+    fun getNetwork(level: Level, pos: BlockPos): PowerNetwork? = networks(level).getNetwork(pos)
+
     fun onLevelTick(event: LevelTickEvent.Post) {
         val level = event.level as? ServerLevel ?: return
         levels[level.dimension()]?.tick(level)
@@ -47,6 +49,9 @@ object PowerNetworks {
         fun markDirty() {
             dirty = true
         }
+
+        fun getNetwork(pos: BlockPos): PowerNetwork? =
+            networks.firstOrNull { it.cables.contains(pos) }
 
         fun tick(level: ServerLevel) {
             if (dirty) {

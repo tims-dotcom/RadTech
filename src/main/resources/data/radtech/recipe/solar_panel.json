@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GGG",
+    "LLL",
+    "ICI"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "L": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "I": {
+      "item": "radtech:aluminum_plate"
+    },
+    "C": {
+      "item": "radtech:copper_cable"
+    }
+  },
+  "result": {
+    "id": "radtech:solar_panel",
+    "count": 1
+  }
+}

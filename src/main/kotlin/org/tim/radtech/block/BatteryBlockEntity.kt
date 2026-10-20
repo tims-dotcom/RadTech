@@ -7,16 +7,24 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.network.chat.Component
+import net.minecraft.world.MenuProvider
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import org.tim.radtech.energy.PowerBuffer
+import org.tim.radtech.energy.PowerSync
 import org.tim.radtech.energy.PowerTransfer
 import org.tim.radtech.energy.VoltageTier
+import org.tim.radtech.menu.BatteryMenu
 import org.tim.radtech.registry.ModBlockEntities
 
 class BatteryBlockEntity(pos: BlockPos, state: BlockState) :
-    BlockEntity(ModBlockEntities.BATTERY.get(), pos, state) {
+    BlockEntity(ModBlockEntities.BATTERY.get(), pos, state), MenuProvider {
 
     class TrackedBuffer(
         tier: VoltageTier,
@@ -45,6 +53,30 @@ class BatteryBlockEntity(pos: BlockPos, state: BlockState) :
     var criticalTicks = 0
     var lastAmps: Double = 0.0
 
+    val data = object : ContainerData {
+        override fun get(index: Int): Int = when (index) {
+            0, 1, 2, 3 -> PowerSync.read(power, index)
+            4 -> (lastAmps * 10).toInt()
+            5 -> heatTicks
+            6 -> if (blockState.getValue(BatteryBlock.OVERHEATED)) 1 else 0
+            else -> 0
+        }
+
+        override fun set(index: Int, value: Int) {
+            when (index) {
+                4 -> lastAmps = value / 10.0
+                5 -> heatTicks = value
+            }
+        }
+
+        override fun getCount(): Int = BatteryMenu.DATA_COUNT
+    }
+
+    override fun getDisplayName(): Component = Component.translatable("block.radtech.battery")
+
+    override fun createMenu(id: Int, inv: Inventory, player: Player): AbstractContainerMenu =
+        BatteryMenu(id, inv, this, data)
+
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
         power.save(tag)
@@ -61,12 +93,12 @@ class BatteryBlockEntity(pos: BlockPos, state: BlockState) :
 
     companion object {
         val TIER = VoltageTier.INDUSTRIAL
-        const val CAPACITY = 2_000_000L
-        const val MAX_INPUT_AMPS = 128
-        const val MAX_OUTPUT_AMPS = 128
+        const val CAPACITY = 4_000_000L
+        const val MAX_INPUT_AMPS = 256
+        const val MAX_OUTPUT_AMPS = 256
 
         // Номінальний струм акумулятора (вище нього йде нагрів)
-        const val SAFE_AMPS = 16.0
+        const val SAFE_AMPS = 32.0
 
         // Пороги для перегріву
         const val OVERHEAT_THRESHOLD = 80
@@ -86,11 +118,11 @@ class BatteryBlockEntity(pos: BlockPos, state: BlockState) :
             be.lastAmps = ampsFlow
             be.power.flowAccumulator = 0L // скидаємо на наступний такт
 
-            // Якщо струм вищий за безпечний (16 А), акумулятор нагрівається пропорційно навантаженню
+            // Якщо струм вищий за безпечний (32 А), акумулятор нагрівається пропорційно навантаженню
             if (ampsFlow > SAFE_AMPS) {
                 val excess = (ampsFlow - SAFE_AMPS).coerceAtLeast(1.0)
                 be.heatTicks += (excess * 1.5).toInt().coerceAtLeast(2)
-            } else if (ampsFlow < 8.0 && be.heatTicks > 0) {
+            } else if (ampsFlow < 16.0 && be.heatTicks > 0) {
                 be.heatTicks--
             }
 

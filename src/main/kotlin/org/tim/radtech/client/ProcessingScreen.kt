@@ -13,13 +13,18 @@ import org.tim.radtech.menu.ProcessingMenu
 class ProcessingScreen(menu: ProcessingMenu, inv: Inventory, title: Component) :
     AbstractContainerScreen<ProcessingMenu>(menu, inv, title) {
 
-    private val energyBar = EnergyBar(30, 17, 10, 50)
+    private val energyBar = EnergyBar(19, 24, 12, 42)
 
     override fun renderBg(g: GuiGraphics, partialTick: Float, mouseX: Int, mouseY: Int) {
         g.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight)
         val width = menu.progress * 24 / menu.maxProgress
-        g.blit(TEXTURE, leftPos + 79, topPos + 34, 176, 0, width, 17)
+        g.blit(TEXTURE, leftPos + 79, topPos + 36, 176, 0, width, 17)
         energyBar.render(g, leftPos, topPos, menu.stored, menu.capacity)
+    }
+
+    override fun renderLabels(g: GuiGraphics, mouseX: Int, mouseY: Int) {
+        g.drawString(font, title, 8, 7, 0xCCE0FF, false)
+        g.drawString(font, playerInventoryTitle, 8, 74, 0x8FA4C5, false)
     }
 
     override fun render(g: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {

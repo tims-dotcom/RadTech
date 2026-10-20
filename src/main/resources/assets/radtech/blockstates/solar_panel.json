@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "radtech:block/solar_panel"
+    },
+    "facing=east": {
+      "model": "radtech:block/solar_panel",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "radtech:block/solar_panel",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "radtech:block/solar_panel",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "radtech:block/transformer"
+    },
+    "facing=east": {
+      "model": "radtech:block/transformer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "radtech:block/transformer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "radtech:block/transformer",
+      "y": 270
+    }
+  }
+}

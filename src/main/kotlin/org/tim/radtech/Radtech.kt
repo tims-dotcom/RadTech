@@ -27,13 +27,18 @@ import org.tim.radtech.block.BareCableBlock
 import org.tim.radtech.block.BatteryBlock
 import org.tim.radtech.block.CableBlock
 import org.tim.radtech.block.CableItem
+import org.tim.radtech.block.CircuitBreakerBlock
 import org.tim.radtech.block.FurnaceBlock
 import org.tim.radtech.block.MachineBlock
 import org.tim.radtech.block.RollingMillBlock
+import org.tim.radtech.block.SolarPanelBlock
 import org.tim.radtech.block.ThermalGeneratorBlock
+import org.tim.radtech.block.TransformerBlock
 import org.tim.radtech.client.ClientEvents
 import org.tim.radtech.energy.CableType
 import org.tim.radtech.energy.PowerNetworks
+import org.tim.radtech.item.GuideBookItem
+import org.tim.radtech.item.MultimeterItem
 import org.tim.radtech.registry.ModBlockEntities
 import org.tim.radtech.registry.ModCapabilities
 import org.tim.radtech.registry.ModMenus
@@ -107,6 +112,35 @@ class Radtech(modEventBus: IEventBus) {
         )
         val BATTERY_ITEM = ITEMS.registerSimpleBlockItem(BATTERY_BLOCK)
 
+        val GUIDE_BOOK: DeferredItem<GuideBookItem> = ITEMS.register("guide_book") { ->
+            GuideBookItem(Item.Properties().stacksTo(1))
+        }
+
+        val MULTIMETER: DeferredItem<MultimeterItem> = ITEMS.register("multimeter") { ->
+            MultimeterItem(Item.Properties().stacksTo(1))
+        }
+
+        val CIRCUIT_BREAKER_BLOCK: DeferredBlock<CircuitBreakerBlock> = BLOCKS.registerBlock(
+            "circuit_breaker",
+            { p -> CircuitBreakerBlock(p) },
+            BlockBehaviour.Properties.of().strength(3.0f, 3.0f).requiresCorrectToolForDrops()
+        )
+        val CIRCUIT_BREAKER_ITEM = ITEMS.registerSimpleBlockItem(CIRCUIT_BREAKER_BLOCK)
+
+        val SOLAR_PANEL_BLOCK: DeferredBlock<SolarPanelBlock> = BLOCKS.registerBlock(
+            "solar_panel",
+            { p -> SolarPanelBlock(p) },
+            BlockBehaviour.Properties.of().strength(3.0f, 3.0f).requiresCorrectToolForDrops()
+        )
+        val SOLAR_PANEL_ITEM = ITEMS.registerSimpleBlockItem(SOLAR_PANEL_BLOCK)
+
+        val TRANSFORMER_BLOCK: DeferredBlock<TransformerBlock> = BLOCKS.registerBlock(
+            "transformer",
+            { p -> TransformerBlock(p) },
+            BlockBehaviour.Properties.of().strength(3.0f, 3.0f).requiresCorrectToolForDrops()
+        )
+        val TRANSFORMER_ITEM = ITEMS.registerSimpleBlockItem(TRANSFORMER_BLOCK)
+
         // Окрема вкладка мода RadTech у креативному інвентарі
         val RADTECH_TAB: DeferredHolder<CreativeModeTab, CreativeModeTab> = CREATIVE_MODE_TABS.register("radtech_tab") { ->
             CreativeModeTab.builder()
@@ -114,7 +148,12 @@ class Radtech(modEventBus: IEventBus) {
                 .icon { ItemStack(BATTERY_ITEM.get()) }
                 .displayItems { _, output ->
                     // Блоки енергії та машини
+                    output.accept(GUIDE_BOOK.get())
+                    output.accept(MULTIMETER.get())
+                    output.accept(CIRCUIT_BREAKER_ITEM.get())
                     output.accept(BATTERY_ITEM.get())
+                    output.accept(SOLAR_PANEL_ITEM.get())
+                    output.accept(TRANSFORMER_ITEM.get())
                     output.accept(THERMAL_GENERATOR_ITEM.get())
                     output.accept(MACHINE_ITEM.get())
                     output.accept(FURNACE_ITEM.get())
@@ -187,7 +226,11 @@ class Radtech(modEventBus: IEventBus) {
         val content: List<ItemLike> = when (event.tabKey) {
             CreativeModeTabs.NATURAL_BLOCKS -> ORES.values.map { it.get() }
             CreativeModeTabs.FUNCTIONAL_BLOCKS ->
-                listOf(BATTERY_ITEM.get(), MACHINE_ITEM.get(), FURNACE_ITEM.get(), THERMAL_GENERATOR_ITEM.get(), ROLLING_MILL_ITEM.get()) +
+                listOf(
+                    CIRCUIT_BREAKER_ITEM.get(), BATTERY_ITEM.get(), SOLAR_PANEL_ITEM.get(),
+                    TRANSFORMER_ITEM.get(), MACHINE_ITEM.get(), FURNACE_ITEM.get(),
+                    THERMAL_GENERATOR_ITEM.get(), ROLLING_MILL_ITEM.get()
+                ) +
                         CABLE_ITEMS.values.map { it.get() } +
                         BARE_CABLE_ITEMS.values.map { it.get() }
             CreativeModeTabs.INGREDIENTS ->

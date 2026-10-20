@@ -42,6 +42,9 @@
   "block.radtech.thermal_generator": "Теплогенератор",
   "block.radtech.rolling_mill": "Прокатний стан",
   "block.radtech.battery": "Акумулятор",
+  "block.radtech.circuit_breaker": "Автоматичний вимикач",
+  "block.radtech.solar_panel": "Сонячна панель",
+  "block.radtech.transformer": "Трансформатор",
   "block.radtech.tin_cable": "Олов'яний кабель (16 А)",
   "block.radtech.copper_cable": "Мідний кабель (30 А)",
   "block.radtech.aluminum_cable": "Алюмінієвий кабель (66 А)",
@@ -55,5 +58,7 @@
   "item.radtech.iron_plate": "Залізна пластина",
   "item.radtech.aluminum_plate": "Алюмінієва пластина",
   "item.radtech.rubber": "Гума",
+  "item.radtech.multimeter": "Мультиметр",
+  "item.radtech.guide_book": "Інженерний планшет",
   "itemGroup.radtech": "RadTech"
 }

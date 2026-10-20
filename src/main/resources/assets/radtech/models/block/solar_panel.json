@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "radtech:block/crusher_base",
+    "north": "radtech:block/solar_panel_front",
+    "south": "radtech:block/crusher_base",
+    "east": "radtech:block/crusher_base",
+    "west": "radtech:block/crusher_west",
+    "up": "radtech:block/solar_panel_top",
+    "down": "radtech:block/crusher_base"
+  }
+}

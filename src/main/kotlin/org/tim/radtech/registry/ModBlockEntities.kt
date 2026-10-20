@@ -7,10 +7,13 @@ import net.neoforged.neoforge.registries.DeferredRegister
 import org.tim.radtech.Radtech
 import org.tim.radtech.block.BatteryBlockEntity
 import org.tim.radtech.block.CableBlockEntity
+import org.tim.radtech.block.CircuitBreakerBlockEntity
 import org.tim.radtech.block.FurnaceBlockEntity
 import org.tim.radtech.block.MachineBlockEntity
 import org.tim.radtech.block.RollingMillBlockEntity
+import org.tim.radtech.block.SolarPanelBlockEntity
 import org.tim.radtech.block.ThermalGeneratorBlockEntity
+import org.tim.radtech.block.TransformerBlockEntity
 
 object ModBlockEntities {
     val TYPES: DeferredRegister<BlockEntityType<*>> =
@@ -53,6 +56,30 @@ object ModBlockEntities {
             BlockEntityType.Builder.of(
                 BlockEntityType.BlockEntitySupplier { pos, state -> BatteryBlockEntity(pos, state) },
                 Radtech.BATTERY_BLOCK.get()
+            ).build(null)
+        }
+
+    val CIRCUIT_BREAKER: DeferredHolder<BlockEntityType<*>, BlockEntityType<CircuitBreakerBlockEntity>> =
+        TYPES.register("circuit_breaker") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> CircuitBreakerBlockEntity(pos, state) },
+                Radtech.CIRCUIT_BREAKER_BLOCK.get()
+            ).build(null)
+        }
+
+    val SOLAR_PANEL: DeferredHolder<BlockEntityType<*>, BlockEntityType<SolarPanelBlockEntity>> =
+        TYPES.register("solar_panel") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> SolarPanelBlockEntity(pos, state) },
+                Radtech.SOLAR_PANEL_BLOCK.get()
+            ).build(null)
+        }
+
+    val TRANSFORMER: DeferredHolder<BlockEntityType<*>, BlockEntityType<TransformerBlockEntity>> =
+        TYPES.register("transformer") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> TransformerBlockEntity(pos, state) },
+                Radtech.TRANSFORMER_BLOCK.get()
             ).build(null)
         }
 

@@ -33,7 +33,7 @@ class ThermalGeneratorMenu(id: Int, inv: Inventory, val be: ThermalGeneratorBloc
     val capacity: Long get() = PowerSync.capacity(data, ThermalGeneratorBlockEntity.POWER_OFFSET)
 
     init {
-        addSlot(SlotItemHandler(be.items, 0, 80, 53))
+        addSlot(SlotItemHandler(be.items, 0, 80, 48))
         for (r in 0..2) for (c in 0..8) addSlot(Slot(inv, c + r * 9 + 9, 8 + c * 18, 84 + r * 18))
         for (c in 0..8) addSlot(Slot(inv, c, 8 + c * 18, 142))
         addDataSlots(data)

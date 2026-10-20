@@ -42,6 +42,9 @@
   "block.radtech.thermal_generator": "Thermal Generator",
   "block.radtech.rolling_mill": "Rolling Mill",
   "block.radtech.battery": "Battery",
+  "block.radtech.circuit_breaker": "Circuit Breaker",
+  "block.radtech.solar_panel": "Solar Panel",
+  "block.radtech.transformer": "Transformer",
   "block.radtech.tin_cable": "Tin Cable (16 A)",
   "block.radtech.copper_cable": "Copper Cable (30 A)",
   "block.radtech.aluminum_cable": "Aluminum Cable (66 A)",
@@ -55,5 +58,7 @@
   "item.radtech.iron_plate": "Iron Plate",
   "item.radtech.aluminum_plate": "Aluminum Plate",
   "item.radtech.rubber": "Rubber",
+  "item.radtech.multimeter": "Multimeter",
+  "item.radtech.guide_book": "Engineer's Manual",
   "itemGroup.radtech": "RadTech"
 }

@@ -10,5 +10,8 @@ object ModCapabilities {
         event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.THERMAL_GENERATOR.get()) { be, _ -> be.power }
         event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.ROLLING_MILL.get()) { be, _ -> be.power }
         event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.BATTERY.get()) { be, _ -> be.power }
+        event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.CIRCUIT_BREAKER.get()) { be, _ -> be.power }
+        event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.SOLAR_PANEL.get()) { be, _ -> be.power }
+        event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.TRANSFORMER.get()) { be, side -> be.getCapability(side) }
     }
 }

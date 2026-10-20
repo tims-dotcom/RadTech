@@ -16,6 +16,9 @@ class PowerNetwork(
 ) {
     data class Endpoint(val pos: BlockPos, val side: Direction)
 
+    var lastTransferred: Long = 0L
+        private set
+
     fun tick(level: ServerLevel) {
         if (endpoints.size < 2) return
 
@@ -52,6 +55,7 @@ class PowerNetwork(
             }
         }
 
+        lastTransferred = totalTransferred
         val amps = totalTransferred.toDouble() / tier.volts
         if (amps > 16.0) {
             burnOut(level, amps)
