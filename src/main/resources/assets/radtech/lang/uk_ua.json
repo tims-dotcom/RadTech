@@ -25,5 +25,19 @@
   "item.radtech.lithium_dust": "Літієвий пил",
   "item.radtech.neodymium_dust": "Неодимовий пил",
   "item.radtech.titanium_dust": "Титановий пил",
-  "item.radtech.tungsten_dust": "Вольфрамовий пил"
+  "item.radtech.tungsten_dust": "Вольфрамовий пил",
+  "unit.radtech.watt": "Вт",
+  "unit.radtech.kilowatt": "кВт",
+  "unit.radtech.megawatt": "МВт",
+  "unit.radtech.watthour": "Вт·год",
+  "unit.radtech.kilowatthour": "кВт·год",
+  "unit.radtech.megawatthour": "МВт·год",
+  "unit.radtech.volt": "В",
+  "unit.radtech.kilovolt": "кВ",
+  "unit.radtech.megavolt": "МВ",
+  "gui.radtech.energy": "Енергія: %s / %s",
+  "gui.radtech.charge": "Заряд: %s%%",
+  "gui.radtech.input": "Вхід: %s, до %s А (%s)",
+  "gui.radtech.output": "Вихід: %s, до %s А (%s)",
+  "block.radtech.thermal_generator": "Теплогенератор"
 }

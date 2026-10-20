@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "north": "radtech:block/thermal_generator_front",
+    "south": "radtech:block/thermal_generator_back",
+    "east": "radtech:block/thermal_generator_pipes",
+    "west": "radtech:block/thermal_generator_hatch",
+    "up": "radtech:block/thermal_generator_top",
+    "down": "radtech:block/thermal_generator_bottom",
+    "particle": "radtech:block/thermal_generator_top"
+  }
+}

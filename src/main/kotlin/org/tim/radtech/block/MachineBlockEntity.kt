@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.ItemStackHandler
 import org.tim.radtech.energy.PowerBuffer
+import org.tim.radtech.energy.PowerSync
 import org.tim.radtech.energy.VoltageTier
 import org.tim.radtech.menu.MachineMenu
 import org.tim.radtech.registry.ModBlockEntities
@@ -28,30 +29,27 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
         override fun onContentsChanged(slot: Int) = setChanged()
     }
 
-    val power = PowerBuffer(VoltageTier.LOW, CAPACITY, 5, 0)
+    val power = PowerBuffer(TIER, CAPACITY, INPUT_AMPS, 0)
 
     var progress = 0
     var maxProgress = 100
 
     val data = object : ContainerData {
         override fun get(index: Int) = when (index) {
-            0 -> progress
-            1 -> maxProgress
-            2 -> (power.stored and 0x7FFFL).toInt()
-            else -> (power.stored shr 15).toInt()
+            PROGRESS -> progress
+            MAX_PROGRESS -> maxProgress
+            else -> PowerSync.read(power, index - POWER_OFFSET)
         }
 
         override fun set(index: Int, value: Int) {
             when (index) {
-                0 -> progress = value
-                1 -> maxProgress = value
+                PROGRESS -> progress = value
+                MAX_PROGRESS -> maxProgress = value
             }
         }
 
-        override fun getCount() = 4
+        override fun getCount() = DATA_COUNT
     }
-
-    fun canWork() = power.stored >= USE_PER_TICK
 
     override fun getDisplayName(): Component = Component.translatable("block.radtech.crusher")
 
@@ -73,8 +71,15 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     companion object {
-        const val CAPACITY = 120_000L
-        const val USE_PER_TICK = 60L
+        val TIER = VoltageTier.INDUSTRIAL
+        const val INPUT_AMPS = 1
+        const val CAPACITY = 400_000L
+        val USE_PER_TICK = TIER.volts.toLong() * INPUT_AMPS
+
+        const val PROGRESS = 0
+        const val MAX_PROGRESS = 1
+        const val POWER_OFFSET = 2
+        const val DATA_COUNT = POWER_OFFSET + PowerSync.SLOTS
 
         private val RECIPES = mapOf(
             "radtech:raw_tin" to "radtech:tin_dust",
@@ -107,8 +112,7 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
             val out = be.items.getStackInSlot(1)
             val fits = out.isEmpty ||
                     (ItemStack.isSameItemSameComponents(out, result) && out.count + result.count <= out.maxStackSize)
-            if (!fits || !be.canWork()) return
-            be.power.consume(USE_PER_TICK)
+            if (!fits || !be.power.consume(USE_PER_TICK)) return
             if (++be.progress >= be.maxProgress) {
                 be.progress = 0
                 be.items.extractItem(0, 1, false)

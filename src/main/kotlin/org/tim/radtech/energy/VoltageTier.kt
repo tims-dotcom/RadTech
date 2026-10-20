@@ -1,7 +1,7 @@
 package org.tim.radtech.energy
 
 enum class VoltageTier(val volts: Int) {
-    LOW(12),
-    MEDIUM(120),
-    HIGH(480)
+    INDUSTRIAL(400),
+    DISTRIBUTION(10_000),
+    TRANSMISSION(110_000)
 }

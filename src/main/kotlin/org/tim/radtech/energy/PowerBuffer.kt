@@ -14,17 +14,21 @@ class PowerBuffer(
     override val stored: Long get() = energy
 
     override fun receive(amount: Long, simulate: Boolean): Long {
-        val limit = tier.volts.toLong() * maxInputAmps
-        val accepted = minOf(amount, limit, capacity - energy).coerceAtLeast(0)
+        val accepted = minOf(amount, maxInputPerTick, capacity - energy).coerceAtLeast(0)
         if (!simulate) energy += accepted
         return accepted
     }
 
     override fun extract(amount: Long, simulate: Boolean): Long {
-        val limit = tier.volts.toLong() * maxOutputAmps
-        val taken = minOf(amount, limit, energy).coerceAtLeast(0)
+        val taken = minOf(amount, maxOutputPerTick, energy).coerceAtLeast(0)
         if (!simulate) energy -= taken
         return taken
+    }
+
+    fun fill(amount: Long): Long {
+        val added = minOf(amount, capacity - energy).coerceAtLeast(0)
+        energy += added
+        return added
     }
 
     fun consume(amount: Long): Boolean {
@@ -33,9 +37,13 @@ class PowerBuffer(
         return true
     }
 
-    fun save(tag: CompoundTag) = tag.putLong("power", energy)
+    fun save(tag: CompoundTag) = tag.putLong(TAG, energy)
 
     fun load(tag: CompoundTag) {
-        energy = tag.getLong("power").coerceIn(0, capacity)
+        energy = tag.getLong(TAG).coerceIn(0, capacity)
+    }
+
+    private companion object {
+        const val TAG = "Energy"
     }
 }

@@ -7,17 +7,24 @@ import net.minecraft.world.inventory.*
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.items.SlotItemHandler
 import org.tim.radtech.block.MachineBlockEntity
+import org.tim.radtech.energy.PowerSync
 import org.tim.radtech.registry.ModMenus
 
 class MachineMenu(id: Int, inv: Inventory, val be: MachineBlockEntity, val data: ContainerData) :
     AbstractContainerMenu(ModMenus.MACHINE.get(), id) {
 
     constructor(id: Int, inv: Inventory, buf: FriendlyByteBuf) :
-            this(id, inv, inv.player.level().getBlockEntity(buf.readBlockPos()) as MachineBlockEntity, SimpleContainerData(4))
+            this(
+                id,
+                inv,
+                inv.player.level().getBlockEntity(buf.readBlockPos()) as MachineBlockEntity,
+                SimpleContainerData(MachineBlockEntity.DATA_COUNT)
+            )
 
-    val progress: Int get() = data.get(0)
-    val maxProgress: Int get() = data.get(1).coerceAtLeast(1)
-    val energy: Long get() = (data.get(3).toLong() shl 15) or data.get(2).toLong()
+    val progress: Int get() = data.get(MachineBlockEntity.PROGRESS)
+    val maxProgress: Int get() = data.get(MachineBlockEntity.MAX_PROGRESS).coerceAtLeast(1)
+    val stored: Long get() = PowerSync.stored(data, MachineBlockEntity.POWER_OFFSET)
+    val capacity: Long get() = PowerSync.capacity(data, MachineBlockEntity.POWER_OFFSET)
 
     init {
         addSlot(SlotItemHandler(be.items, 0, 56, 35))

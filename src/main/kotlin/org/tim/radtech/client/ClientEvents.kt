@@ -11,5 +11,6 @@ object ClientEvents {
     fun onRegisterScreens(e: RegisterMenuScreensEvent) {
         e.register(ModMenus.MACHINE.get()) { menu, inv, title -> MachineScreen(menu, inv, title, CRUSHER_TEX) }
         e.register(ModMenus.FURNACE.get()) { menu, inv, title -> FurnaceScreen(menu, inv, title) }
+        e.register(ModMenus.THERMAL_GENERATOR.get()) { menu, inv, title -> ThermalGeneratorScreen(menu, inv, title) }
     }
 }

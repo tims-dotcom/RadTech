@@ -25,5 +25,19 @@
   "item.radtech.lithium_dust": "Lithium Dust",
   "item.radtech.neodymium_dust": "Neodymium Dust",
   "item.radtech.titanium_dust": "Titanium Dust",
-  "item.radtech.tungsten_dust": "Tungsten Dust"
+  "item.radtech.tungsten_dust": "Tungsten Dust",
+  "unit.radtech.watt": "W",
+  "unit.radtech.kilowatt": "kW",
+  "unit.radtech.megawatt": "MW",
+  "unit.radtech.watthour": "Wh",
+  "unit.radtech.kilowatthour": "kWh",
+  "unit.radtech.megawatthour": "MWh",
+  "unit.radtech.volt": "V",
+  "unit.radtech.kilovolt": "kV",
+  "unit.radtech.megavolt": "MV",
+  "gui.radtech.energy": "Energy: %s / %s",
+  "gui.radtech.charge": "Charge: %s%%",
+  "gui.radtech.input": "Input: %s, up to %s A (%s)",
+  "gui.radtech.output": "Output: %s, up to %s A (%s)",
+  "block.radtech.thermal_generator": "Thermal Generator"
 }

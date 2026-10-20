@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "radtech:block/thermal_generator" },
+    "facing=east": { "model": "radtech:block/thermal_generator", "y": 90 },
+    "facing=south": { "model": "radtech:block/thermal_generator", "y": 180 },
+    "facing=west": { "model": "radtech:block/thermal_generator", "y": 270 }
+  }
+}

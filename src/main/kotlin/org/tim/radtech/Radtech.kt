@@ -5,22 +5,22 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockBehaviour
+import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
+import net.neoforged.fml.loading.FMLEnvironment
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 import org.apache.logging.log4j.LogManager
-import org.tim.radtech.block.MachineBlock
-import org.tim.radtech.registry.ModBlockEntities
-import org.tim.radtech.registry.ModMenus
-import net.neoforged.api.distmarker.Dist
-import net.neoforged.fml.loading.FMLEnvironment
-import org.tim.radtech.client.ClientEvents
 import org.tim.radtech.block.FurnaceBlock
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import org.tim.radtech.energy.PowerCapabilities
+import org.tim.radtech.block.MachineBlock
+import org.tim.radtech.block.ThermalGeneratorBlock
+import org.tim.radtech.client.ClientEvents
+import org.tim.radtech.registry.ModBlockEntities
+import org.tim.radtech.registry.ModCapabilities
+import org.tim.radtech.registry.ModMenus
 
 @Mod(Radtech.MODID)
 class Radtech(modEventBus: IEventBus) {
@@ -59,9 +59,14 @@ class Radtech(modEventBus: IEventBus) {
             BlockBehaviour.Properties.of().strength(3.0f, 3.0f).requiresCorrectToolForDrops()
         )
         val FURNACE_ITEM = ITEMS.registerSimpleBlockItem(FURNACE_BLOCK)
+
+        val THERMAL_GENERATOR_BLOCK: DeferredBlock<ThermalGeneratorBlock> = BLOCKS.registerBlock(
+            "thermal_generator",
+            { p -> ThermalGeneratorBlock(p) },
+            BlockBehaviour.Properties.of().strength(3.0f, 3.0f).requiresCorrectToolForDrops()
+        )
+        val THERMAL_GENERATOR_ITEM = ITEMS.registerSimpleBlockItem(THERMAL_GENERATOR_BLOCK)
     }
-
-
 
     init {
         BLOCKS.register(modEventBus)
@@ -69,22 +74,18 @@ class Radtech(modEventBus: IEventBus) {
         ModBlockEntities.TYPES.register(modEventBus)
         ModMenus.MENUS.register(modEventBus)
         modEventBus.addListener(::addCreative)
+        modEventBus.addListener(ModCapabilities::register)
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(ClientEvents::onRegisterScreens)
         }
-        modEventBus.addListener(::registerCapabilities)
-
         LOGGER.info("Radtech mod initialized!")
-    }
-
-    private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
-        event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.MACHINE.get()) { be, _ -> be.power }
     }
 
     private fun addCreative(event: BuildCreativeModeTabContentsEvent) {
         val content: List<ItemLike> = when (event.tabKey) {
             CreativeModeTabs.NATURAL_BLOCKS -> ORES.values.map { it.get() }
-            CreativeModeTabs.FUNCTIONAL_BLOCKS -> listOf(MACHINE_ITEM.get(), FURNACE_ITEM.get())
+            CreativeModeTabs.FUNCTIONAL_BLOCKS ->
+                listOf(MACHINE_ITEM.get(), FURNACE_ITEM.get(), THERMAL_GENERATOR_ITEM.get())
             CreativeModeTabs.INGREDIENTS ->
                 (RAW.values + INGOTS.values + TIN_NUGGET + DUSTS.values).map { it.get() }
             else -> return
