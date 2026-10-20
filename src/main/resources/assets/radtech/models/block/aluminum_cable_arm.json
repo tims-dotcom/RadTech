@@ -1,0 +1,7 @@
+{
+  "parent": "radtech:block/cable_arm",
+  "textures": {
+    "0": "radtech:block/aluminum_cable",
+    "particle": "radtech:block/aluminum_cable"
+  }
+}

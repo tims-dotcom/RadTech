@@ -5,6 +5,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import org.tim.radtech.Radtech
+import org.tim.radtech.block.CableBlockEntity
 import org.tim.radtech.block.FurnaceBlockEntity
 import org.tim.radtech.block.MachineBlockEntity
 import org.tim.radtech.block.ThermalGeneratorBlockEntity
@@ -34,6 +35,14 @@ object ModBlockEntities {
             BlockEntityType.Builder.of(
                 BlockEntityType.BlockEntitySupplier { pos, state -> ThermalGeneratorBlockEntity(pos, state) },
                 Radtech.THERMAL_GENERATOR_BLOCK.get()
+            ).build(null)
+        }
+
+    val CABLE: DeferredHolder<BlockEntityType<*>, BlockEntityType<CableBlockEntity>> =
+        TYPES.register("cable") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> CableBlockEntity(pos, state) },
+                *Radtech.CABLES.values.map { it.get() }.toTypedArray()
             ).build(null)
         }
 }

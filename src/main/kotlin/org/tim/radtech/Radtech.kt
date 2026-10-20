@@ -9,15 +9,23 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.loading.FMLEnvironment
+import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
+import net.neoforged.neoforge.event.server.ServerStoppedEvent
+import net.neoforged.neoforge.event.tick.LevelTickEvent
+import net.neoforged.neoforge.event.tick.ServerTickEvent
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 import org.apache.logging.log4j.LogManager
+import org.tim.radtech.block.CableBlock
+import org.tim.radtech.block.CableItem
 import org.tim.radtech.block.FurnaceBlock
 import org.tim.radtech.block.MachineBlock
 import org.tim.radtech.block.ThermalGeneratorBlock
 import org.tim.radtech.client.ClientEvents
+import org.tim.radtech.energy.CableType
+import org.tim.radtech.energy.PowerNetworks
 import org.tim.radtech.registry.ModBlockEntities
 import org.tim.radtech.registry.ModCapabilities
 import org.tim.radtech.registry.ModMenus
@@ -66,6 +74,20 @@ class Radtech(modEventBus: IEventBus) {
             BlockBehaviour.Properties.of().strength(3.0f, 3.0f).requiresCorrectToolForDrops()
         )
         val THERMAL_GENERATOR_ITEM = ITEMS.registerSimpleBlockItem(THERMAL_GENERATOR_BLOCK)
+
+        val CABLES: Map<CableType, DeferredBlock<CableBlock>> = CableType.entries.associateWith { type ->
+            BLOCKS.registerBlock(
+                "${type.id}_cable",
+                { p -> CableBlock(type, p) },
+                BlockBehaviour.Properties.of().strength(1.0f).noOcclusion()
+            )
+        }
+
+        val CABLE_ITEMS = CableType.entries.associateWith { type ->
+            ITEMS.register("${type.id}_cable") { ->
+                CableItem(CABLES.getValue(type).get(), type, Item.Properties())
+            }
+        }
     }
 
     init {
@@ -78,6 +100,9 @@ class Radtech(modEventBus: IEventBus) {
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(ClientEvents::onRegisterScreens)
         }
+        NeoForge.EVENT_BUS.addListener<LevelTickEvent.Post>(PowerNetworks::onLevelTick)
+        NeoForge.EVENT_BUS.addListener<ServerTickEvent.Post>(PowerNetworks::onServerTick)
+        NeoForge.EVENT_BUS.addListener<ServerStoppedEvent>(PowerNetworks::onServerStopped)
         LOGGER.info("Radtech mod initialized!")
     }
 
@@ -85,7 +110,8 @@ class Radtech(modEventBus: IEventBus) {
         val content: List<ItemLike> = when (event.tabKey) {
             CreativeModeTabs.NATURAL_BLOCKS -> ORES.values.map { it.get() }
             CreativeModeTabs.FUNCTIONAL_BLOCKS ->
-                listOf(MACHINE_ITEM.get(), FURNACE_ITEM.get(), THERMAL_GENERATOR_ITEM.get())
+                listOf(MACHINE_ITEM.get(), FURNACE_ITEM.get(), THERMAL_GENERATOR_ITEM.get()) +
+                        CABLE_ITEMS.values.map { it.get() }
             CreativeModeTabs.INGREDIENTS ->
                 (RAW.values + INGOTS.values + TIN_NUGGET + DUSTS.values).map { it.get() }
             else -> return

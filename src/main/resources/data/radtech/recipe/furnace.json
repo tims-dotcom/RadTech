@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IFI",
+    "IRI",
+    "TCT"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "T": {
+      "item": "radtech:tin_ingot"
+    },
+    "C": {
+      "item": "radtech:tin_cable"
+    }
+  },
+  "result": {
+    "id": "radtech:furnace",
+    "count": 1
+  }
+}

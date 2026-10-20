@@ -1,0 +1,7 @@
+{
+  "parent": "radtech:block/cable_core",
+  "textures": {
+    "0": "radtech:block/tin_cable",
+    "particle": "radtech:block/tin_cable"
+  }
+}

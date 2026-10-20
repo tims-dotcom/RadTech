@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "TTT"
+  ],
+  "key": {
+    "T": {
+      "item": "radtech:aluminum_ingot"
+    }
+  },
+  "result": {
+    "id": "radtech:aluminum_cable",
+    "count": 4
+  }
+}
