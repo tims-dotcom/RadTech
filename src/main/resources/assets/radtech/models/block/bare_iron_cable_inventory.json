@@ -1,0 +1,7 @@
+{
+  "parent": "radtech:block/cable_inventory",
+  "textures": {
+    "0": "radtech:block/bare_iron_cable",
+    "particle": "radtech:block/bare_iron_cable"
+  }
+}

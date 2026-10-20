@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "overheated=false": {
+      "model": "radtech:block/battery"
+    },
+    "overheated=true": {
+      "model": "radtech:block/battery_overheated"
+    }
+  }
+}

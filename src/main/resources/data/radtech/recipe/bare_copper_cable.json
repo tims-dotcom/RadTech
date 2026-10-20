@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "radtech:copper_plate"
+    }
+  },
+  "result": {
+    "id": "radtech:bare_copper_cable",
+    "count": 4
+  }
+}

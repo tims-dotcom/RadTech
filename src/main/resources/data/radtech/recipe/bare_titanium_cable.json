@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "TTT"
+  ],
+  "key": {
+    "T": {
+      "item": "radtech:titanium_ingot"
+    }
+  },
+  "result": {
+    "id": "radtech:bare_titanium_cable",
+    "count": 4
+  }
+}

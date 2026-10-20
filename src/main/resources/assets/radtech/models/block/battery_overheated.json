@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "radtech:block/battery_front_overheated",
+    "north": "radtech:block/battery_front_overheated",
+    "south": "radtech:block/battery_side_overheated",
+    "east": "radtech:block/battery_side_overheated",
+    "west": "radtech:block/battery_side_overheated",
+    "up": "radtech:block/battery_top_overheated",
+    "down": "radtech:block/battery_side_overheated"
+  }
+}
