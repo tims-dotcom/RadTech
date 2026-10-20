@@ -64,10 +64,10 @@ object PowerNetworks {
                 val queue = ArrayDeque<BlockPos>()
                 queue.add(start)
                 val endpoints = LinkedHashMap<BlockPos, PowerNetwork.Endpoint>()
-                var limit = Long.MAX_VALUE
+                val networkCables = ArrayList<BlockPos>()
                 while (queue.isNotEmpty()) {
                     val pos = queue.removeFirst()
-                    limit = minOf(limit, cables.getValue(pos).maxPerTick)
+                    networkCables.add(pos)
                     for (dir in Direction.entries) {
                         val next = pos.relative(dir)
                         if (cables.containsKey(next)) {
@@ -79,7 +79,7 @@ object PowerNetworks {
                         }
                     }
                 }
-                result += PowerNetwork(cables.getValue(start).tier, limit, endpoints.values.toList())
+                result += PowerNetwork(cables.getValue(start).tier, endpoints.values.toList(), networkCables)
             }
             return result
         }
