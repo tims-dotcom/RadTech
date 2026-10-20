@@ -74,6 +74,7 @@ class CableBlock(val type: CableType, props: BlockBehaviour.Properties) : BaseEn
 
     private fun connects(level: LevelAccessor, neighborState: BlockState, neighborPos: BlockPos, dir: Direction): Boolean =
         neighborState.block is CableBlock ||
+        neighborState.block is BareCableBlock ||
                 (level as? Level)?.getCapability(PowerCapabilities.POWER, neighborPos, dir.opposite) != null
 
     companion object {

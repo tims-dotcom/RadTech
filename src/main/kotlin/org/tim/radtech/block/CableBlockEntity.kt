@@ -11,8 +11,13 @@ class CableBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun onLoad() {
         super.onLoad()
-        val cable = blockState.block as? CableBlock ?: return
-        level?.takeUnless { it.isClientSide }?.let { PowerNetworks.register(it, worldPosition, cable.type) }
+        val block = blockState.block
+        val type = when (block) {
+            is CableBlock -> block.type
+            is BareCableBlock -> block.type
+            else -> return
+        }
+        level?.takeUnless { it.isClientSide }?.let { PowerNetworks.register(it, worldPosition, type) }
     }
 
     override fun setRemoved() {

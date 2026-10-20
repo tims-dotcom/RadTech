@@ -26,4 +26,9 @@ object ModMenus {
         MENUS.register("thermal_generator") { ->
             IMenuTypeExtension.create { id, inv, buf -> ThermalGeneratorMenu(id, inv, buf) }
         }
+
+    val ROLLING_MILL: DeferredHolder<MenuType<*>, MenuType<ProcessingMenu>> =
+        MENUS.register("rolling_mill") { ->
+            IMenuTypeExtension.create { id, inv, buf -> ProcessingMenu(ModMenus.ROLLING_MILL.get(), id, inv, buf) }
+        }
 }

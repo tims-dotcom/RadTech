@@ -31,6 +31,6 @@ class FurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         const val SPEED_FACTOR = 2
         const val MIN_TIME = 20
 
-        private val SPEC = MachineSpec(VoltageTier.INDUSTRIAL, 1, 400_000L, "block.radtech.furnace")
+        private val SPEC = MachineSpec(VoltageTier.INDUSTRIAL, 6, 400_000L, "block.radtech.furnace")
     }
 }

@@ -1,16 +1,16 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "pattern": [
-    "TTT"
-  ],
-  "key": {
-    "T": {
-      "item": "radtech:titanium_ingot"
+  "ingredients": [
+    {
+      "item": "radtech:bare_titanium_cable"
+    },
+    {
+      "item": "radtech:rubber"
     }
-  },
+  ],
   "result": {
     "id": "radtech:titanium_cable",
-    "count": 4
+    "count": 1
   }
 }

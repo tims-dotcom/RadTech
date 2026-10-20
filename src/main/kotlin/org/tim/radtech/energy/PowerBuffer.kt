@@ -2,7 +2,7 @@ package org.tim.radtech.energy
 
 import net.minecraft.nbt.CompoundTag
 
-class PowerBuffer(
+open class PowerBuffer(
     override val tier: VoltageTier,
     override val capacity: Long,
     override val maxInputAmps: Int,
@@ -13,13 +13,13 @@ class PowerBuffer(
 
     override val stored: Long get() = energy
 
-    override fun receive(amount: Long, simulate: Boolean): Long {
+    open override fun receive(amount: Long, simulate: Boolean): Long {
         val accepted = minOf(amount, maxInputPerTick, capacity - energy).coerceAtLeast(0)
         if (!simulate) energy += accepted
         return accepted
     }
 
-    override fun extract(amount: Long, simulate: Boolean): Long {
+    open override fun extract(amount: Long, simulate: Boolean): Long {
         val taken = minOf(amount, maxOutputPerTick, energy).coerceAtLeast(0)
         if (!simulate) energy -= taken
         return taken

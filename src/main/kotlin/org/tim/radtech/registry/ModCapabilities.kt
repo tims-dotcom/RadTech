@@ -8,5 +8,7 @@ object ModCapabilities {
         event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.MACHINE.get()) { be, _ -> be.power }
         event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.FURNACE.get()) { be, _ -> be.power }
         event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.THERMAL_GENERATOR.get()) { be, _ -> be.power }
+        event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.ROLLING_MILL.get()) { be, _ -> be.power }
+        event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.BATTERY.get()) { be, _ -> be.power }
     }
 }

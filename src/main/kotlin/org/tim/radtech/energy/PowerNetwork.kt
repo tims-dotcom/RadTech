@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import org.tim.radtech.block.BareCableBlock
 import org.tim.radtech.block.CableBlock
 
 class PowerNetwork(
@@ -52,7 +53,7 @@ class PowerNetwork(
         }
 
         val amps = totalTransferred.toDouble() / tier.volts
-        if (amps > 3.0) {
+        if (amps > 16.0) {
             burnOut(level, amps)
         }
     }
@@ -61,8 +62,8 @@ class PowerNetwork(
         for (pos in cables) {
             if (level.isLoaded(pos)) {
                 val block = level.getBlockState(pos).block
-                val cableType = (block as? CableBlock)?.type ?: CableType.TIN
-                if (amps > 3.0 && amps > cableType.maxAmps) {
+                val cableType = (block as? CableBlock)?.type ?: (block as? BareCableBlock)?.type ?: continue
+                if (amps > cableType.maxAmps) {
                     level.sendParticles(
                         ParticleTypes.FLAME,
                         pos.x + 0.5, pos.y + 0.5, pos.z + 0.5,

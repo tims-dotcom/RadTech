@@ -25,7 +25,7 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
     companion object {
         const val CRUSH_TIME = 100
 
-        private val SPEC = MachineSpec(VoltageTier.INDUSTRIAL, 1, 400_000L, "block.radtech.crusher")
+        private val SPEC = MachineSpec(VoltageTier.INDUSTRIAL, 6, 400_000L, "block.radtech.crusher")
 
         private val RECIPES = mapOf(
             "radtech:raw_tin" to "radtech:tin_dust",

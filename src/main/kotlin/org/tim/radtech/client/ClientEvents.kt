@@ -8,5 +8,6 @@ object ClientEvents {
         e.register(ModMenus.MACHINE.get()) { menu, inv, title -> ProcessingScreen(menu, inv, title) }
         e.register(ModMenus.FURNACE.get()) { menu, inv, title -> ProcessingScreen(menu, inv, title) }
         e.register(ModMenus.THERMAL_GENERATOR.get()) { menu, inv, title -> ThermalGeneratorScreen(menu, inv, title) }
+        e.register(ModMenus.ROLLING_MILL.get()) { menu, inv, title -> ProcessingScreen(menu, inv, title) }
     }
 }

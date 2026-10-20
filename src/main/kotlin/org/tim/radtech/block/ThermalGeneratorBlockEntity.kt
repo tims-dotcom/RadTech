@@ -87,7 +87,7 @@ class ThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     companion object {
         val TIER = VoltageTier.INDUSTRIAL
-        const val OUTPUT_AMPS = 2
+        const val OUTPUT_AMPS = 12
         const val CAPACITY = 800_000L
         val GENERATION = TIER.volts.toLong() * OUTPUT_AMPS
 

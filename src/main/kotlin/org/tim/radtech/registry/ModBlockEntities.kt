@@ -5,9 +5,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import org.tim.radtech.Radtech
+import org.tim.radtech.block.BatteryBlockEntity
 import org.tim.radtech.block.CableBlockEntity
 import org.tim.radtech.block.FurnaceBlockEntity
 import org.tim.radtech.block.MachineBlockEntity
+import org.tim.radtech.block.RollingMillBlockEntity
 import org.tim.radtech.block.ThermalGeneratorBlockEntity
 
 object ModBlockEntities {
@@ -38,11 +40,28 @@ object ModBlockEntities {
             ).build(null)
         }
 
+    val ROLLING_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<RollingMillBlockEntity>> =
+        TYPES.register("rolling_mill") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> RollingMillBlockEntity(pos, state) },
+                Radtech.ROLLING_MILL_BLOCK.get()
+            ).build(null)
+        }
+
+    val BATTERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<BatteryBlockEntity>> =
+        TYPES.register("battery") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> BatteryBlockEntity(pos, state) },
+                Radtech.BATTERY_BLOCK.get()
+            ).build(null)
+        }
+
     val CABLE: DeferredHolder<BlockEntityType<*>, BlockEntityType<CableBlockEntity>> =
         TYPES.register("cable") { ->
             BlockEntityType.Builder.of(
                 BlockEntityType.BlockEntitySupplier { pos, state -> CableBlockEntity(pos, state) },
-                *Radtech.CABLES.values.map { it.get() }.toTypedArray()
+                *(Radtech.CABLES.values.map { it.get() } +
+                  Radtech.BARE_CABLES.values.map { it.get() }).toTypedArray()
             ).build(null)
         }
 }
