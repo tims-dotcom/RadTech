@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "radtech:block/press"},
+    "facing=east": {"model": "radtech:block/press", "y": 90},
+    "facing=south": {"model": "radtech:block/press", "y": 180},
+    "facing=west": {"model": "radtech:block/press", "y": 270}
+  }
+}

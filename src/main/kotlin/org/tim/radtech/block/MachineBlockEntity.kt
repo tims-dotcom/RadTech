@@ -28,6 +28,7 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
         private val SPEC = MachineSpec(VoltageTier.INDUSTRIAL, 6, 400_000L, "block.radtech.crusher")
 
         private val RECIPES = mapOf(
+            // RadTech руди та raw матеріали -> подвоєний пил
             "radtech:raw_tin" to "radtech:tin_dust",
             "radtech:raw_aluminum" to "radtech:aluminum_dust",
             "radtech:raw_lithium" to "radtech:lithium_dust",
@@ -39,7 +40,18 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
             "radtech:lithium_ore" to "radtech:lithium_dust",
             "radtech:neodymium_ore" to "radtech:neodymium_dust",
             "radtech:titanium_ore" to "radtech:titanium_dust",
-            "radtech:tungsten_ore" to "radtech:tungsten_dust"
+            "radtech:tungsten_ore" to "radtech:tungsten_dust",
+            // Ванільні руди та сирі метали -> подвоєний пил для переплавки в злитки
+            "minecraft:raw_iron" to "radtech:iron_dust",
+            "minecraft:iron_ore" to "radtech:iron_dust",
+            "minecraft:deepslate_iron_ore" to "radtech:iron_dust",
+            "minecraft:raw_copper" to "radtech:copper_dust",
+            "minecraft:copper_ore" to "radtech:copper_dust",
+            "minecraft:deepslate_copper_ore" to "radtech:copper_dust",
+            "minecraft:raw_gold" to "radtech:gold_dust",
+            "minecraft:gold_ore" to "radtech:gold_dust",
+            "minecraft:deepslate_gold_ore" to "radtech:gold_dust",
+            "minecraft:nether_gold_ore" to "radtech:gold_dust"
         )
     }
 }

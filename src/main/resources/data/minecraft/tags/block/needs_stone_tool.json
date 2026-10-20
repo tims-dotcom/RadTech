@@ -5,7 +5,14 @@
     "radtech:aluminum_ore",
     "radtech:lithium_ore",
     "radtech:neodymium_ore",
-    "radtech:titanium_ore",
-    "radtech:tungsten_ore"
+    "radtech:crusher",
+    "radtech:furnace",
+    "radtech:thermal_generator",
+    "radtech:press",
+    "radtech:rolling_mill",
+    "radtech:battery",
+    "radtech:circuit_breaker",
+    "radtech:solar_panel",
+    "radtech:transformer"
   ]
 }

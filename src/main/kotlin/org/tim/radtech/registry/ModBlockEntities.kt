@@ -1,3 +1,5 @@
+@file:Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
 package org.tim.radtech.registry
 
 import net.minecraft.core.registries.Registries
@@ -10,6 +12,7 @@ import org.tim.radtech.block.CableBlockEntity
 import org.tim.radtech.block.CircuitBreakerBlockEntity
 import org.tim.radtech.block.FurnaceBlockEntity
 import org.tim.radtech.block.MachineBlockEntity
+import org.tim.radtech.block.PressBlockEntity
 import org.tim.radtech.block.RollingMillBlockEntity
 import org.tim.radtech.block.SolarPanelBlockEntity
 import org.tim.radtech.block.ThermalGeneratorBlockEntity
@@ -40,6 +43,14 @@ object ModBlockEntities {
             BlockEntityType.Builder.of(
                 BlockEntityType.BlockEntitySupplier { pos, state -> ThermalGeneratorBlockEntity(pos, state) },
                 Radtech.THERMAL_GENERATOR_BLOCK.get()
+            ).build(null)
+        }
+
+    val PRESS: DeferredHolder<BlockEntityType<*>, BlockEntityType<PressBlockEntity>> =
+        TYPES.register("press") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> PressBlockEntity(pos, state) },
+                Radtech.PRESS_BLOCK.get()
             ).build(null)
         }
 

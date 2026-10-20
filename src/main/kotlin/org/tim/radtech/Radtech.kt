@@ -30,6 +30,7 @@ import org.tim.radtech.block.CableItem
 import org.tim.radtech.block.CircuitBreakerBlock
 import org.tim.radtech.block.FurnaceBlock
 import org.tim.radtech.block.MachineBlock
+import org.tim.radtech.block.PressBlock
 import org.tim.radtech.block.RollingMillBlock
 import org.tim.radtech.block.SolarPanelBlock
 import org.tim.radtech.block.ThermalGeneratorBlock
@@ -56,7 +57,8 @@ class Radtech(modEventBus: IEventBus) {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID)
 
         val METALS = listOf("tin", "aluminum", "lithium", "neodymium", "titanium", "tungsten")
-        // Метали для пластин (мають пластину у прокатному стані)
+        val ALL_DUSTS = listOf("tin", "aluminum", "lithium", "neodymium", "titanium", "tungsten", "iron", "copper", "gold")
+        // Метали для пластин (мають пластину у пресі)
         val PLATE_METALS = listOf("copper", "tin", "iron", "aluminum")
 
         val ORES: Map<String, DeferredBlock<Block>> = METALS.associateWith { metal ->
@@ -68,7 +70,7 @@ class Radtech(modEventBus: IEventBus) {
 
         val RAW: Map<String, DeferredItem<Item>> = METALS.associateWith { ITEMS.registerSimpleItem("raw_$it") }
         val INGOTS: Map<String, DeferredItem<Item>> = METALS.associateWith { ITEMS.registerSimpleItem("${it}_ingot") }
-        val DUSTS: Map<String, DeferredItem<Item>> = METALS.associateWith { ITEMS.registerSimpleItem("${it}_dust") }
+        val DUSTS: Map<String, DeferredItem<Item>> = ALL_DUSTS.associateWith { ITEMS.registerSimpleItem("${it}_dust") }
         val TIN_NUGGET: DeferredItem<Item> = ITEMS.registerSimpleItem("tin_nugget")
 
         // Пластини (мідь, олово, залізо, алюміній)
@@ -97,6 +99,13 @@ class Radtech(modEventBus: IEventBus) {
             BlockBehaviour.Properties.of().strength(3.0f, 3.0f).requiresCorrectToolForDrops()
         )
         val THERMAL_GENERATOR_ITEM = ITEMS.registerSimpleBlockItem(THERMAL_GENERATOR_BLOCK)
+
+        val PRESS_BLOCK: DeferredBlock<PressBlock> = BLOCKS.registerBlock(
+            "press",
+            { p -> PressBlock(p) },
+            BlockBehaviour.Properties.of().strength(3.0f, 3.0f).requiresCorrectToolForDrops()
+        )
+        val PRESS_ITEM = ITEMS.registerSimpleBlockItem(PRESS_BLOCK)
 
         val ROLLING_MILL_BLOCK: DeferredBlock<RollingMillBlock> = BLOCKS.registerBlock(
             "rolling_mill",
@@ -157,6 +166,7 @@ class Radtech(modEventBus: IEventBus) {
                     output.accept(THERMAL_GENERATOR_ITEM.get())
                     output.accept(MACHINE_ITEM.get())
                     output.accept(FURNACE_ITEM.get())
+                    output.accept(PRESS_ITEM.get())
                     output.accept(ROLLING_MILL_ITEM.get())
                     // Кабелі (ізольовані та голі)
                     CABLE_ITEMS.values.forEach { output.accept(it.get()) }
@@ -229,7 +239,7 @@ class Radtech(modEventBus: IEventBus) {
                 listOf(
                     CIRCUIT_BREAKER_ITEM.get(), BATTERY_ITEM.get(), SOLAR_PANEL_ITEM.get(),
                     TRANSFORMER_ITEM.get(), MACHINE_ITEM.get(), FURNACE_ITEM.get(),
-                    THERMAL_GENERATOR_ITEM.get(), ROLLING_MILL_ITEM.get()
+                    PRESS_ITEM.get(), THERMAL_GENERATOR_ITEM.get(), ROLLING_MILL_ITEM.get()
                 ) +
                         CABLE_ITEMS.values.map { it.get() } +
                         BARE_CABLE_ITEMS.values.map { it.get() }

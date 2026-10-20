@@ -9,6 +9,12 @@
     "radtech:tungsten_ore",
     "radtech:crusher",
     "radtech:furnace",
-    "radtech:thermal_generator"
+    "radtech:thermal_generator",
+    "radtech:press",
+    "radtech:rolling_mill",
+    "radtech:battery",
+    "radtech:circuit_breaker",
+    "radtech:solar_panel",
+    "radtech:transformer"
   ]
 }

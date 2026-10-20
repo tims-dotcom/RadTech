@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "radtech:bare_titanium_cable"
+          "name": "radtech:press"
         }
       ],
       "conditions": [

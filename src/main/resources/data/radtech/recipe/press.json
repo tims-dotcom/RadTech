@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " P ",
+    "IBI",
+    "TTT"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "T": {
+      "item": "radtech:tin_ingot"
+    }
+  },
+  "result": {
+    "id": "radtech:press",
+    "count": 1
+  }
+}

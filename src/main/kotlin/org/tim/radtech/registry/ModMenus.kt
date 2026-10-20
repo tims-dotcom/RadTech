@@ -36,6 +36,11 @@ object ModMenus {
             IMenuTypeExtension.create { id, inv, buf -> ProcessingMenu(ModMenus.ROLLING_MILL.get(), id, inv, buf) }
         }
 
+    val PRESS: DeferredHolder<MenuType<*>, MenuType<ProcessingMenu>> =
+        MENUS.register("press") { ->
+            IMenuTypeExtension.create { id, inv, buf -> ProcessingMenu(ModMenus.PRESS.get(), id, inv, buf) }
+        }
+
     val BATTERY: DeferredHolder<MenuType<*>, MenuType<BatteryMenu>> =
         MENUS.register("battery") { ->
             IMenuTypeExtension.create { id, inv, buf -> BatteryMenu(id, inv, buf) }
