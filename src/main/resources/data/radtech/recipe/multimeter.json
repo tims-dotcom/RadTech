@@ -3,22 +3,14 @@
   "category": "misc",
   "pattern": [
     "W W",
-    "IGI",
-    "IRI"
+    "AGA",
+    "AEA"
   ],
   "key": {
-    "W": {
-      "item": "radtech:copper_cable"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "G": {
-      "item": "minecraft:glass_pane"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    }
+    "W": { "item": "radtech:copper_wire_coil" },
+    "A": { "item": "radtech:aluminum_plate" },
+    "G": { "item": "minecraft:glass_pane" },
+    "E": { "item": "radtech:electronic_circuit" }
   },
   "result": {
     "id": "radtech:multimeter",

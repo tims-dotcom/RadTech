@@ -1,0 +1,16 @@
+﻿{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "radtech:bare_aluminum_wire_coil"
+    },
+    {
+      "item": "radtech:rubber"
+    }
+  ],
+  "result": {
+    "id": "radtech:aluminum_wire_coil",
+    "count": 1
+  }
+}

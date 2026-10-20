@@ -2,23 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "IPI",
-    "IRI",
-    "TTT"
+    "TPT",
+    "CMC",
+    "IEI"
   ],
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "P": {
-      "item": "minecraft:piston"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "T": {
-      "item": "radtech:tin_ingot"
-    }
+    "T": { "item": "radtech:titanium_plate" },
+    "P": { "item": "minecraft:piston" },
+    "C": { "item": "radtech:electric_motor" },
+    "M": { "item": "radtech:machine_casing" },
+    "I": { "item": "radtech:iron_plate" },
+    "E": { "item": "radtech:electronic_circuit" }
   },
   "result": {
     "id": "radtech:crusher",

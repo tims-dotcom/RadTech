@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "radtech:block/connector"
+    },
+    "facing=down": {
+      "model": "radtech:block/connector",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "radtech:block/connector",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "radtech:block/connector",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "radtech:block/connector",
+      "x": 90,
+      "y": 270
+    },
+    "facing=east": {
+      "model": "radtech:block/connector",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

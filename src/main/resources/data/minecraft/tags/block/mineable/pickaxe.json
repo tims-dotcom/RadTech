@@ -15,6 +15,13 @@
     "radtech:battery",
     "radtech:circuit_breaker",
     "radtech:solar_panel",
-    "radtech:transformer"
+    "radtech:transformer",
+    "radtech:connector",
+    "radtech:industrial_lamp",
+    "radtech:lithium_battery",
+    "radtech:panel_meter",
+    "radtech:alarm_siren",
+    "radtech:boiler_casing",
+    "radtech:large_thermal_generator"
   ]
 }

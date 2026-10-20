@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,overheated=false": {
+      "model": "radtech:block/lithium_battery"
+    },
+    "facing=east,overheated=false": {
+      "model": "radtech:block/lithium_battery",
+      "y": 90
+    },
+    "facing=south,overheated=false": {
+      "model": "radtech:block/lithium_battery",
+      "y": 180
+    },
+    "facing=west,overheated=false": {
+      "model": "radtech:block/lithium_battery",
+      "y": 270
+    },
+    "facing=north,overheated=true": {
+      "model": "radtech:block/lithium_battery_overheated"
+    },
+    "facing=east,overheated=true": {
+      "model": "radtech:block/lithium_battery_overheated",
+      "y": 90
+    },
+    "facing=south,overheated=true": {
+      "model": "radtech:block/lithium_battery_overheated",
+      "y": 180
+    },
+    "facing=west,overheated=true": {
+      "model": "radtech:block/lithium_battery_overheated",
+      "y": 270
+    }
+  }
+}

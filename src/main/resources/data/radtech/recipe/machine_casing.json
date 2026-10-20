@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PIP",
+    "IAI",
+    "PIP"
+  ],
+  "key": {
+    "P": { "item": "radtech:iron_plate" },
+    "I": { "item": "minecraft:iron_ingot" },
+    "A": { "item": "radtech:tin_plate" }
+  },
+  "result": {
+    "id": "radtech:machine_casing",
+    "count": 1
+  }
+}

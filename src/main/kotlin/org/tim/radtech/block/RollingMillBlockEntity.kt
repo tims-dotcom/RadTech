@@ -29,12 +29,12 @@ class RollingMillBlockEntity(pos: BlockPos, state: BlockState) :
         private val SPEC = MachineSpec(VoltageTier.INDUSTRIAL, 6, 400_000L, "block.radtech.rolling_mill")
 
         // itemId -> Pair(resultItemId, count)
-        // Прокатний стан витягує виключно пластини у готові кабелі
-        private val RECIPES = mapOf(
-            "radtech:tin_plate" to Pair("radtech:bare_tin_cable", 2),
-            "radtech:copper_plate" to Pair("radtech:bare_copper_cable", 2),
-            "radtech:aluminum_plate" to Pair("radtech:bare_aluminum_cable", 2),
-            "radtech:iron_plate" to Pair("radtech:bare_iron_cable", 2)
+        // Прокатний стан витягує пластини у котушки оголеного дроту (4 шт з 1 пластини)
+        val RECIPES = mapOf(
+            "radtech:tin_plate" to Pair("radtech:bare_tin_wire_coil", 4),
+            "radtech:copper_plate" to Pair("radtech:bare_copper_wire_coil", 4),
+            "radtech:aluminum_plate" to Pair("radtech:bare_aluminum_wire_coil", 4),
+            "radtech:iron_plate" to Pair("radtech:bare_iron_wire_coil", 4)
         )
     }
 }

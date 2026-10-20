@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "WTW",
+    "WCW",
+    "P P"
+  ],
+  "key": {
+    "W": { "item": "radtech:tungsten_ingot" },
+    "T": { "item": "radtech:titanium_plate" },
+    "C": { "item": "radtech:bare_copper_wire_coil" },
+    "P": { "item": "radtech:copper_plate" }
+  },
+  "result": {
+    "id": "radtech:tungsten_element",
+    "count": 1
+  }
+}

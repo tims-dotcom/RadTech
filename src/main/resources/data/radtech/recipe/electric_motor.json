@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PCP",
+    "IMI",
+    "PCP"
+  ],
+  "key": {
+    "P": { "item": "radtech:iron_plate" },
+    "C": { "item": "radtech:copper_coil" },
+    "I": { "item": "minecraft:iron_ingot" },
+    "M": { "item": "radtech:neodymium_magnet" }
+  },
+  "result": {
+    "id": "radtech:electric_motor",
+    "count": 1
+  }
+}

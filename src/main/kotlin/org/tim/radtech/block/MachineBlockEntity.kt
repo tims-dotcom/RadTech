@@ -27,7 +27,7 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
 
         private val SPEC = MachineSpec(VoltageTier.INDUSTRIAL, 6, 400_000L, "block.radtech.crusher")
 
-        private val RECIPES = mapOf(
+        val RECIPES = mapOf(
             // RadTech руди та raw матеріали -> подвоєний пил
             "radtech:raw_tin" to "radtech:tin_dust",
             "radtech:raw_aluminum" to "radtech:aluminum_dust",

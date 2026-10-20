@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "NRN",
+    "RPR",
+    "NGN"
+  ],
+  "key": {
+    "N": { "item": "radtech:tin_nugget" },
+    "R": { "item": "minecraft:redstone" },
+    "P": { "item": "radtech:copper_plate" },
+    "G": { "item": "minecraft:gold_ingot" }
+  },
+  "result": {
+    "id": "radtech:electronic_circuit",
+    "count": 1
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "NNN",
+    "NNN",
+    "NNN"
+  ],
+  "key": {
+    "N": { "item": "radtech:tin_nugget" }
+  },
+  "result": {
+    "id": "radtech:tin_ingot",
+    "count": 1
+  }
+}

@@ -2,26 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "IFI",
-    "IRI",
-    "TCT"
+    "PGP",
+    "HCH",
+    "WMW"
   ],
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "F": {
-      "item": "minecraft:furnace"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    },
-    "T": {
-      "item": "radtech:tin_ingot"
-    },
-    "C": {
-      "item": "radtech:tin_cable"
-    }
+    "P": { "item": "radtech:iron_plate" },
+    "G": { "item": "minecraft:furnace" },
+    "H": { "item": "radtech:tungsten_element" },
+    "C": { "item": "radtech:electronic_circuit" },
+    "W": { "item": "radtech:copper_wire_coil" },
+    "M": { "item": "radtech:machine_casing" }
   },
   "result": {
     "id": "radtech:furnace",

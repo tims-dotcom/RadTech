@@ -16,6 +16,10 @@ object PowerNetworks {
 
     fun unregister(level: Level, pos: BlockPos) = networks(level).unregister(pos)
 
+    fun registerConnectable(level: Level, pos: BlockPos) = networks(level).registerConnectable(pos)
+
+    fun unregisterConnectable(level: Level, pos: BlockPos) = networks(level).unregisterConnectable(pos)
+
     fun markDirty(level: Level) = networks(level).markDirty()
 
     fun getNetwork(level: Level, pos: BlockPos): PowerNetwork? = networks(level).getNetwork(pos)
@@ -33,6 +37,7 @@ object PowerNetworks {
 
     private class LevelNetworks {
         private val cables = HashMap<BlockPos, CableType>()
+        private val connectables = HashSet<BlockPos>()
         private var networks: List<PowerNetwork> = emptyList()
         private var dirty = false
 
@@ -43,6 +48,16 @@ object PowerNetworks {
 
         fun unregister(pos: BlockPos) {
             cables.remove(pos)
+            dirty = true
+        }
+
+        fun registerConnectable(pos: BlockPos) {
+            connectables.add(pos.immutable())
+            dirty = true
+        }
+
+        fun unregisterConnectable(pos: BlockPos) {
+            connectables.remove(pos)
             dirty = true
         }
 
@@ -64,27 +79,73 @@ object PowerNetworks {
         private fun rebuild(level: Level): List<PowerNetwork> {
             val visited = HashSet<BlockPos>()
             val result = ArrayList<PowerNetwork>()
-            for (start in cables.keys) {
+            val allStarts = HashSet<BlockPos>().apply {
+                addAll(cables.keys)
+                addAll(connectables)
+            }
+
+            for (start in allStarts) {
                 if (!visited.add(start)) continue
                 val queue = ArrayDeque<BlockPos>()
                 queue.add(start)
                 val endpoints = LinkedHashMap<BlockPos, PowerNetwork.Endpoint>()
                 val networkCables = ArrayList<BlockPos>()
+                var netTier = VoltageTier.INDUSTRIAL
+
                 while (queue.isNotEmpty()) {
                     val pos = queue.removeFirst()
-                    networkCables.add(pos)
-                    for (dir in Direction.entries) {
-                        val next = pos.relative(dir)
-                        if (cables.containsKey(next)) {
-                            if (visited.add(next)) queue.add(next)
-                        } else if (level.isLoaded(next) &&
-                            level.getCapability(PowerCapabilities.POWER, next, dir.opposite) != null
-                        ) {
-                            endpoints.putIfAbsent(next, PowerNetwork.Endpoint(next, dir.opposite))
+
+                    // Обхід через блокові кабелі
+                    if (cables.containsKey(pos)) {
+                        networkCables.add(pos)
+                        netTier = cables.getValue(pos).tier
+                        for (dir in Direction.entries) {
+                            val next = pos.relative(dir)
+                            if (cables.containsKey(next)) {
+                                if (visited.add(next)) queue.add(next)
+                            } else if (connectables.contains(next)) {
+                                if (visited.add(next)) queue.add(next)
+                            } else if (level.isLoaded(next) &&
+                                level.getCapability(PowerCapabilities.POWER, next, dir.opposite) != null
+                            ) {
+                                endpoints.putIfAbsent(next, PowerNetwork.Endpoint(next, dir.opposite))
+                            }
+                        }
+                    }
+
+                    // Обхід через підвісні дроти та конектори (IWireConnectable)
+                    if (connectables.contains(pos)) {
+                        networkCables.add(pos)
+                        val be = level.getBlockEntity(pos)
+                        if (be is IWireConnectable) {
+                            for (conn in be.connections) {
+                                val target = conn.targetPos
+                                if (level.isLoaded(target) && visited.add(target)) {
+                                    queue.add(target)
+                                }
+                            }
+                            val powerPos = be.getConnectedPowerPos()
+                            if (powerPos != null && level.isLoaded(powerPos)) {
+                                if (powerPos == pos) {
+                                    // Сам блок має споживання (наприклад, лампа)
+                                    endpoints.putIfAbsent(pos, PowerNetwork.Endpoint(pos, Direction.UP))
+                                } else {
+                                    for (d in Direction.entries) {
+                                        val cap = level.getCapability(PowerCapabilities.POWER, powerPos, d)
+                                        if (cap != null) {
+                                            endpoints.putIfAbsent(powerPos, PowerNetwork.Endpoint(powerPos, d))
+                                            break
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-                result += PowerNetwork(cables.getValue(start).tier, endpoints.values.toList(), networkCables)
+
+                if (endpoints.isNotEmpty() || networkCables.isNotEmpty()) {
+                    result += PowerNetwork(netTier, endpoints.values.toList(), networkCables)
+                }
             }
             return result
         }

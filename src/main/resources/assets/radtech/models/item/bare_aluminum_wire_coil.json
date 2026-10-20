@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "radtech:item/bare_aluminum_wire_coil"
+  }
+}

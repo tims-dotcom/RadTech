@@ -11,6 +11,9 @@ object ModCapabilities {
         event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.ROLLING_MILL.get()) { be, _ -> be.power }
         event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.PRESS.get()) { be, _ -> be.power }
         event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.BATTERY.get()) { be, _ -> be.power }
+        event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.LITHIUM_BATTERY.get()) { be, _ -> be.power }
+        event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.LARGE_THERMAL_GEN.get()) { be, _ -> be.power }
+        event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.LAMP.get()) { be, _ -> be.power }
         event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.CIRCUIT_BREAKER.get()) { be, _ -> be.power }
         event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.SOLAR_PANEL.get()) { be, _ -> be.power }
         event.registerBlockEntity(PowerCapabilities.POWER, ModBlockEntities.TRANSFORMER.get()) { be, side -> be.getCapability(side) }

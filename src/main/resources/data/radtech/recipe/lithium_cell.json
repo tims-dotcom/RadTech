@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " C ",
+    "ALA",
+    "ARA"
+  ],
+  "key": {
+    "C": { "item": "radtech:copper_plate" },
+    "A": { "item": "radtech:aluminum_plate" },
+    "L": { "item": "radtech:lithium_ingot" },
+    "R": { "item": "minecraft:redstone" }
+  },
+  "result": {
+    "id": "radtech:lithium_cell",
+    "count": 1
+  }
+}

@@ -29,12 +29,13 @@ class PressBlockEntity(pos: BlockPos, state: BlockState) :
         private val SPEC = MachineSpec(VoltageTier.INDUSTRIAL, 6, 400_000L, "block.radtech.press")
 
         // itemId -> Pair(resultItemId, count)
-        // Прес штампує злитки у металеві пластини
-        private val RECIPES = mapOf(
-            "minecraft:copper_ingot" to Pair("radtech:copper_plate", 1),
-            "minecraft:iron_ingot" to Pair("radtech:iron_plate", 1),
-            "radtech:tin_ingot" to Pair("radtech:tin_plate", 1),
-            "radtech:aluminum_ingot" to Pair("radtech:aluminum_plate", 1)
+        // Прес штампує злитки у металеві пластини (2 шт зі злитка — вдвічі вигідніше за ручний крафт)
+        val RECIPES = mapOf(
+            "minecraft:copper_ingot" to Pair("radtech:copper_plate", 2),
+            "minecraft:iron_ingot" to Pair("radtech:iron_plate", 2),
+            "radtech:tin_ingot" to Pair("radtech:tin_plate", 2),
+            "radtech:aluminum_ingot" to Pair("radtech:aluminum_plate", 2),
+            "radtech:titanium_ingot" to Pair("radtech:titanium_plate", 2)
         )
     }
 }

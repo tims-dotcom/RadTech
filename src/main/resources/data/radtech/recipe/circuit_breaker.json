@@ -2,23 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "ICI",
     "ILI",
-    "IRI"
+    "WCW",
+    "IMI"
   ],
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "C": {
-      "item": "radtech:copper_cable"
-    },
-    "L": {
-      "item": "minecraft:lever"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    }
+    "I": { "item": "radtech:iron_plate" },
+    "L": { "item": "minecraft:lever" },
+    "W": { "item": "radtech:copper_wire_coil" },
+    "C": { "item": "radtech:electronic_circuit" },
+    "M": { "item": "radtech:machine_casing" }
   },
   "result": {
     "id": "radtech:circuit_breaker",

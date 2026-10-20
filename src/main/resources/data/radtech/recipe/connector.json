@@ -1,0 +1,21 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " C ",
+    " T ",
+    "TTT"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "T": {
+      "item": "minecraft:terracotta"
+    }
+  },
+  "result": {
+    "id": "radtech:connector",
+    "count": 4
+  }
+}

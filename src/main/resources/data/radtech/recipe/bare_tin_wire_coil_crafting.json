@@ -1,0 +1,16 @@
+﻿{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "radtech:tin_plate"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "result": {
+    "id": "radtech:bare_tin_wire_coil",
+    "count": 2
+  }
+}

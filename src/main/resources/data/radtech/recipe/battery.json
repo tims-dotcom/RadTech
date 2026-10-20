@@ -2,29 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "TCT",
-    "LRL",
-    "IPI"
+    "WTW",
+    "LML",
+    "PRP"
   ],
   "key": {
-    "T": {
-      "item": "radtech:tin_cable"
-    },
-    "C": {
-      "item": "radtech:copper_plate"
-    },
-    "L": {
-      "item": "radtech:lithium_ingot"
-    },
-    "R": {
-      "item": "radtech:rubber"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "P": {
-      "item": "radtech:iron_plate"
-    }
+    "W": { "item": "radtech:tin_wire_coil" },
+    "T": { "item": "radtech:copper_plate" },
+    "L": { "item": "radtech:lithium_cell" },
+    "M": { "item": "radtech:machine_casing" },
+    "P": { "item": "radtech:iron_plate" },
+    "R": { "item": "radtech:rubber" }
   },
   "result": {
     "id": "radtech:battery",

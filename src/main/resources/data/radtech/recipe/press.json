@@ -2,23 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    " P ",
-    "IBI",
-    "TTT"
+    "IPI",
+    "BMB",
+    "CEC"
   ],
   "key": {
-    "P": {
-      "item": "minecraft:piston"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "B": {
-      "item": "minecraft:iron_block"
-    },
-    "T": {
-      "item": "radtech:tin_ingot"
-    }
+    "I": { "item": "radtech:iron_plate" },
+    "P": { "item": "minecraft:piston" },
+    "B": { "item": "minecraft:iron_block" },
+    "M": { "item": "radtech:machine_casing" },
+    "C": { "item": "radtech:electric_motor" },
+    "E": { "item": "radtech:electronic_circuit" }
   },
   "result": {
     "id": "radtech:press",

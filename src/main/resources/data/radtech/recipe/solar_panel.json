@@ -4,21 +4,13 @@
   "pattern": [
     "GGG",
     "LLL",
-    "ICI"
+    "CMC"
   ],
   "key": {
-    "G": {
-      "item": "minecraft:glass_pane"
-    },
-    "L": {
-      "item": "minecraft:lapis_lazuli"
-    },
-    "I": {
-      "item": "radtech:aluminum_plate"
-    },
-    "C": {
-      "item": "radtech:copper_cable"
-    }
+    "G": { "item": "minecraft:glass" },
+    "L": { "item": "minecraft:lapis_lazuli" },
+    "C": { "item": "radtech:electronic_circuit" },
+    "M": { "item": "radtech:machine_casing" }
   },
   "result": {
     "id": "radtech:solar_panel",

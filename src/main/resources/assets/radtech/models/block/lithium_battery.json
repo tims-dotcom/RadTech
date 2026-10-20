@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "radtech:block/battery_side",
+    "north": "radtech:block/lithium_battery_front",
+    "south": "radtech:block/battery_side",
+    "east": "radtech:block/battery_side",
+    "west": "radtech:block/battery_side",
+    "up": "radtech:block/battery_top",
+    "down": "radtech:block/battery_side"
+  }
+}

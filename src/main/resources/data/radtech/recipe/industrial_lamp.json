@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " G ",
+    "GTG",
+    "CIC"
+  ],
+  "key": {
+    "G": { "item": "minecraft:glass" },
+    "T": { "item": "radtech:tungsten_element" },
+    "C": { "item": "radtech:connector" },
+    "I": { "item": "radtech:iron_plate" }
+  },
+  "result": {
+    "id": "radtech:industrial_lamp",
+    "count": 2
+  }
+}

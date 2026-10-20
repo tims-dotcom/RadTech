@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BHB",
+    "CGC",
+    "BEB"
+  ],
+  "key": {
+    "B": { "item": "radtech:boiler_casing" },
+    "H": { "item": "radtech:tungsten_element" },
+    "C": { "item": "radtech:copper_coil" },
+    "G": { "item": "radtech:thermal_generator" },
+    "E": { "item": "radtech:electronic_circuit" }
+  },
+  "result": {
+    "id": "radtech:large_thermal_generator",
+    "count": 1
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "radtech:titanium_ingot" }
+  ],
+  "result": {
+    "id": "radtech:titanium_plate",
+    "count": 1
+  }
+}

@@ -7,11 +7,17 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import org.tim.radtech.Radtech
+import org.tim.radtech.block.AlarmSirenBlockEntity
 import org.tim.radtech.block.BatteryBlockEntity
 import org.tim.radtech.block.CableBlockEntity
 import org.tim.radtech.block.CircuitBreakerBlockEntity
+import org.tim.radtech.block.ConnectorBlockEntity
 import org.tim.radtech.block.FurnaceBlockEntity
+import org.tim.radtech.block.IndustrialLampBlockEntity
+import org.tim.radtech.block.LargeThermalGeneratorBlockEntity
+import org.tim.radtech.block.LithiumBatteryBlockEntity
 import org.tim.radtech.block.MachineBlockEntity
+import org.tim.radtech.block.PanelMeterBlockEntity
 import org.tim.radtech.block.PressBlockEntity
 import org.tim.radtech.block.RollingMillBlockEntity
 import org.tim.radtech.block.SolarPanelBlockEntity
@@ -100,6 +106,54 @@ object ModBlockEntities {
                 BlockEntityType.BlockEntitySupplier { pos, state -> CableBlockEntity(pos, state) },
                 *(Radtech.CABLES.values.map { it.get() } +
                   Radtech.BARE_CABLES.values.map { it.get() }).toTypedArray()
+            ).build(null)
+        }
+
+    val CONNECTOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<ConnectorBlockEntity>> =
+        TYPES.register("connector") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> ConnectorBlockEntity(pos, state) },
+                Radtech.CONNECTOR_BLOCK.get()
+            ).build(null)
+        }
+
+    val LAMP: DeferredHolder<BlockEntityType<*>, BlockEntityType<IndustrialLampBlockEntity>> =
+        TYPES.register("lamp") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> IndustrialLampBlockEntity(pos, state) },
+                Radtech.INDUSTRIAL_LAMP_BLOCK.get()
+            ).build(null)
+        }
+
+    val LITHIUM_BATTERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<LithiumBatteryBlockEntity>> =
+        TYPES.register("lithium_battery") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> LithiumBatteryBlockEntity(pos, state) },
+                Radtech.LITHIUM_BATTERY_BLOCK.get()
+            ).build(null)
+        }
+
+    val LARGE_THERMAL_GEN: DeferredHolder<BlockEntityType<*>, BlockEntityType<LargeThermalGeneratorBlockEntity>> =
+        TYPES.register("large_thermal_generator") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> LargeThermalGeneratorBlockEntity(pos, state) },
+                Radtech.LARGE_THERMAL_GEN_BLOCK.get()
+            ).build(null)
+        }
+
+    val PANEL_METER: DeferredHolder<BlockEntityType<*>, BlockEntityType<PanelMeterBlockEntity>> =
+        TYPES.register("panel_meter") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> PanelMeterBlockEntity(pos, state) },
+                Radtech.PANEL_METER_BLOCK.get()
+            ).build(null)
+        }
+
+    val ALARM_SIREN: DeferredHolder<BlockEntityType<*>, BlockEntityType<AlarmSirenBlockEntity>> =
+        TYPES.register("alarm_siren") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> AlarmSirenBlockEntity(pos, state) },
+                Radtech.ALARM_SIREN_BLOCK.get()
             ).build(null)
         }
 }

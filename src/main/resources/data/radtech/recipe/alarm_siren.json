@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " R ",
+    "RKR",
+    "CIC"
+  ],
+  "key": {
+    "R": { "item": "minecraft:redstone_torch" },
+    "K": { "item": "radtech:copper_coil" },
+    "C": { "item": "radtech:connector" },
+    "I": { "item": "radtech:iron_plate" }
+  },
+  "result": {
+    "id": "radtech:alarm_siren",
+    "count": 1
+  }
+}

@@ -1,0 +1,25 @@
+﻿{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "unlock_right_away": {
+      "trigger": "minecraft:tick"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "radtech:solar_panel"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "unlock_right_away",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "radtech:solar_panel"
+    ]
+  }
+}

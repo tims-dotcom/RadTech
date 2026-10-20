@@ -2,23 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "III",
-    "IFI",
-    "TRT"
+    "PPP",
+    "CFC",
+    "TMT"
   ],
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "F": {
-      "item": "minecraft:furnace"
-    },
-    "T": {
-      "item": "radtech:tin_ingot"
-    },
-    "R": {
-      "item": "minecraft:redstone"
-    }
+    "P": { "item": "radtech:copper_plate" },
+    "C": { "item": "radtech:copper_coil" },
+    "F": { "item": "minecraft:furnace" },
+    "T": { "item": "radtech:tin_wire_coil" },
+    "M": { "item": "radtech:machine_casing" }
   },
   "result": {
     "id": "radtech:thermal_generator",

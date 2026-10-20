@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "radtech:block/panel_meter"
+    },
+    "facing=east": {
+      "model": "radtech:block/panel_meter",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "radtech:block/panel_meter",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "radtech:block/panel_meter",
+      "y": 270
+    }
+  }
+}

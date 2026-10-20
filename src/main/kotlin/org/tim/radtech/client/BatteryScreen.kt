@@ -26,8 +26,10 @@ class BatteryScreen(menu: BatteryMenu, inv: Inventory, title: Component) :
         }
 
         // 2. Шкала тепла (x=38, y=25, w=8, h=40)
-        val heat = menu.heatTicks.coerceIn(0, 80)
-        val heatH = ((heat * 40) / 80).coerceIn(0, 40)
+        val isLithium = menu.be is org.tim.radtech.block.LithiumBatteryBlockEntity
+        val maxHeat = if (isLithium) 120 else 80
+        val heat = menu.heatTicks.coerceIn(0, maxHeat)
+        val heatH = ((heat * 40) / maxHeat).coerceIn(0, 40)
         if (heatH > 0) {
             g.blit(TEXTURE, leftPos + 38, topPos + 25 + 40 - heatH, 192, 40 - heatH, 8, heatH)
         }
@@ -46,8 +48,12 @@ class BatteryScreen(menu: BatteryMenu, inv: Inventory, title: Component) :
 
         g.drawString(font, "Напруга: 380 В", 54, 36, 0x55FFFF, false)
 
+        val isLithium = menu.be is org.tim.radtech.block.LithiumBatteryBlockEntity
+        val safeAmps = if (isLithium) 64.0 else 32.0
+        val maxHeat = if (isLithium) 120 else 80
+
         val ampsText = String.format("Струм: %.1f А", menu.amps)
-        val ampsColor = if (menu.amps > 32.0) 0xFF5555 else 0xFFFF55
+        val ampsColor = if (menu.amps > safeAmps) 0xFF5555 else 0xFFFF55
         g.drawString(font, ampsText, 54, 47, ampsColor, false)
 
         val (statusText, statusColor) = if (menu.isOverheated) {
@@ -75,9 +81,12 @@ class BatteryScreen(menu: BatteryMenu, inv: Inventory, title: Component) :
 
         // Tooltip для шкали тепла
         if (mouseX in (leftPos + 36)..(leftPos + 48) && mouseY in (topPos + 23)..(topPos + 67)) {
+            val isLithium = menu.be is org.tim.radtech.block.LithiumBatteryBlockEntity
+            val safeStr = if (isLithium) "до 64 А" else "до 32 А"
+            val maxHeat = if (isLithium) 120 else 80
             val list = listOf(
-                Component.literal("§cТемпература: §f${menu.heatTicks} / 80"),
-                Component.literal("§7Безпечний струм: §fдо 32 А"),
+                Component.literal("§cТемпература: §f${menu.heatTicks} / $maxHeat"),
+                Component.literal("§7Безпечний струм: §f$safeStr"),
                 if (menu.isOverheated) Component.literal("§cУВАГА: Загроза вибуху!") else Component.literal("§aОхолодження в нормі")
             )
             g.renderComponentTooltip(font, list, mouseX, mouseY)

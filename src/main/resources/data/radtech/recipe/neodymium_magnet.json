@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "N N",
+    "NIN",
+    " R "
+  ],
+  "key": {
+    "N": { "item": "radtech:neodymium_ingot" },
+    "I": { "item": "minecraft:iron_ingot" },
+    "R": { "item": "minecraft:redstone" }
+  },
+  "result": {
+    "id": "radtech:neodymium_magnet",
+    "count": 1
+  }
+}

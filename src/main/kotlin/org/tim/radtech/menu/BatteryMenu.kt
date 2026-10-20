@@ -9,18 +9,18 @@ import net.minecraft.world.inventory.ContainerLevelAccess
 import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
-import org.tim.radtech.block.BatteryBlockEntity
+import net.minecraft.world.level.block.entity.BlockEntity
 import org.tim.radtech.energy.PowerSync
 import org.tim.radtech.registry.ModMenus
 
-class BatteryMenu(id: Int, inv: Inventory, val be: BatteryBlockEntity, val data: ContainerData) :
+class BatteryMenu(id: Int, inv: Inventory, val be: BlockEntity, val data: ContainerData) :
     AbstractContainerMenu(ModMenus.BATTERY.get(), id) {
 
     constructor(id: Int, inv: Inventory, buf: FriendlyByteBuf) :
             this(
                 id,
                 inv,
-                inv.player.level().getBlockEntity(buf.readBlockPos()) as BatteryBlockEntity,
+                inv.player.level().getBlockEntity(buf.readBlockPos())!!,
                 SimpleContainerData(DATA_COUNT)
             )
 

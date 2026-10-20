@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PIP",
+    "CTC",
+    "PIP"
+  ],
+  "key": {
+    "P": { "item": "radtech:iron_plate" },
+    "I": { "item": "radtech:titanium_plate" },
+    "C": { "item": "radtech:copper_plate" },
+    "T": { "item": "minecraft:bricks" }
+  },
+  "result": {
+    "id": "radtech:boiler_casing",
+    "count": 4
+  }
+}

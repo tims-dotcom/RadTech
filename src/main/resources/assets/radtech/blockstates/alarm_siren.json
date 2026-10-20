@@ -1,0 +1,56 @@
+{
+  "variants": {
+    "alarm=false,facing=up": {
+      "model": "radtech:block/alarm_siren"
+    },
+    "alarm=true,facing=up": {
+      "model": "radtech:block/alarm_siren_on"
+    },
+    "alarm=false,facing=down": {
+      "model": "radtech:block/alarm_siren",
+      "x": 180
+    },
+    "alarm=true,facing=down": {
+      "model": "radtech:block/alarm_siren_on",
+      "x": 180
+    },
+    "alarm=false,facing=north": {
+      "model": "radtech:block/alarm_siren",
+      "x": 90
+    },
+    "alarm=true,facing=north": {
+      "model": "radtech:block/alarm_siren_on",
+      "x": 90
+    },
+    "alarm=false,facing=south": {
+      "model": "radtech:block/alarm_siren",
+      "x": 90,
+      "y": 180
+    },
+    "alarm=true,facing=south": {
+      "model": "radtech:block/alarm_siren_on",
+      "x": 90,
+      "y": 180
+    },
+    "alarm=false,facing=west": {
+      "model": "radtech:block/alarm_siren",
+      "x": 90,
+      "y": 270
+    },
+    "alarm=true,facing=west": {
+      "model": "radtech:block/alarm_siren_on",
+      "x": 90,
+      "y": 270
+    },
+    "alarm=false,facing=east": {
+      "model": "radtech:block/alarm_siren",
+      "x": 90,
+      "y": 90
+    },
+    "alarm=true,facing=east": {
+      "model": "radtech:block/alarm_siren_on",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

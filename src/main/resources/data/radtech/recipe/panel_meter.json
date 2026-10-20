@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IGI",
+    "CEC",
+    "III"
+  ],
+  "key": {
+    "I": { "item": "radtech:iron_plate" },
+    "G": { "item": "minecraft:glass_pane" },
+    "C": { "item": "radtech:copper_coil" },
+    "E": { "item": "radtech:electronic_circuit" }
+  },
+  "result": {
+    "id": "radtech:panel_meter",
+    "count": 1
+  }
+}

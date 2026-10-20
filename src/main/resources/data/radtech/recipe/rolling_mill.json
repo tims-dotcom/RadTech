@@ -2,20 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "I I",
-    "IBI",
-    "TTT"
+    "IRI",
+    "CMC",
+    "IEI"
   ],
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "B": {
-      "item": "minecraft:iron_block"
-    },
-    "T": {
-      "item": "radtech:tin_ingot"
-    }
+    "I": { "item": "radtech:iron_plate" },
+    "R": { "item": "minecraft:iron_ingot" },
+    "C": { "item": "radtech:electric_motor" },
+    "M": { "item": "radtech:machine_casing" },
+    "E": { "item": "radtech:electronic_circuit" }
   },
   "result": {
     "id": "radtech:rolling_mill",

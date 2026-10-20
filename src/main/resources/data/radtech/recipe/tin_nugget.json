@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "radtech:tin_ingot" }
+  ],
+  "result": {
+    "id": "radtech:tin_nugget",
+    "count": 9
+  }
+}

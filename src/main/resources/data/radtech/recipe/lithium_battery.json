@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "TTT",
+    "LBL",
+    "LEL"
+  ],
+  "key": {
+    "T": { "item": "radtech:titanium_plate" },
+    "L": { "item": "radtech:lithium_cell" },
+    "B": { "item": "radtech:battery" },
+    "E": { "item": "radtech:electronic_circuit" }
+  },
+  "result": {
+    "id": "radtech:lithium_battery",
+    "count": 1
+  }
+}

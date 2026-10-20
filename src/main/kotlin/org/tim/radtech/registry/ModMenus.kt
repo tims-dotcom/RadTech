@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister
 import org.tim.radtech.Radtech
 import org.tim.radtech.menu.BatteryMenu
 import org.tim.radtech.menu.CircuitBreakerMenu
+import org.tim.radtech.menu.LargeThermalGeneratorMenu
 import org.tim.radtech.menu.ProcessingMenu
 import org.tim.radtech.menu.SolarPanelMenu
 import org.tim.radtech.menu.ThermalGeneratorMenu
@@ -29,6 +30,11 @@ object ModMenus {
     val THERMAL_GENERATOR: DeferredHolder<MenuType<*>, MenuType<ThermalGeneratorMenu>> =
         MENUS.register("thermal_generator") { ->
             IMenuTypeExtension.create { id, inv, buf -> ThermalGeneratorMenu(id, inv, buf) }
+        }
+
+    val LARGE_THERMAL_GEN: DeferredHolder<MenuType<*>, MenuType<LargeThermalGeneratorMenu>> =
+        MENUS.register("large_thermal_generator") { ->
+            IMenuTypeExtension.create { id, inv, buf -> LargeThermalGeneratorMenu(id, inv, buf) }
         }
 
     val ROLLING_MILL: DeferredHolder<MenuType<*>, MenuType<ProcessingMenu>> =

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "radtech:block/boiler_casing"
+    }
+  }
+}
