@@ -120,6 +120,7 @@ class BatteryBlockEntity(pos: BlockPos, state: BlockState) :
             PowerTransfer.push(level, pos, be.power)
 
             // Заряджання/розряджання предметів у слотах
+            var itemTransferred = false
             val chargeStack = be.items.getStackInSlot(0)
             if (!chargeStack.isEmpty && chargeStack.item is IElectricItem) {
                 val electric = chargeStack.item as IElectricItem
@@ -129,6 +130,7 @@ class BatteryBlockEntity(pos: BlockPos, state: BlockState) :
                     val extracted = be.power.extract(toSend, false)
                     if (extracted > 0) {
                         electric.receive(chargeStack, extracted, false)
+                        itemTransferred = true
                     }
                 }
             }
@@ -142,6 +144,7 @@ class BatteryBlockEntity(pos: BlockPos, state: BlockState) :
                     val taken = electric.extract(dischargeStack, toTake, false)
                     if (taken > 0) {
                         be.power.receive(taken, false)
+                        itemTransferred = true
                     }
                 }
             }
@@ -207,7 +210,9 @@ class BatteryBlockEntity(pos: BlockPos, state: BlockState) :
                 be.criticalTicks = 0
             }
 
-            be.setChanged()
+            if (itemTransferred || isOverheated != wasOverheated || level.gameTime % 80L == 0L) {
+                be.setChanged()
+            }
         }
     }
 }

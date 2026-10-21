@@ -4,7 +4,9 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.inventory.MenuType
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import org.tim.radtech.energy.VoltageTier
@@ -17,9 +19,8 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
     override val menuType: MenuType<*> get() = ModMenus.MACHINE.get()
 
     override fun findRecipe(input: ItemStack, level: Level): MachineRecipe? {
-        val resultId = RECIPES[BuiltInRegistries.ITEM.getKey(input.item).toString()] ?: return null
-        val item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(resultId))
-        return MachineRecipe(ItemStack(item, 2), CRUSH_TIME)
+        val resultItem = ITEM_LOOKUP[input.item] ?: return null
+        return MachineRecipe(ItemStack(resultItem, 2), CRUSH_TIME)
     }
 
     companion object {
@@ -53,5 +54,14 @@ class MachineBlockEntity(pos: BlockPos, state: BlockState) :
             "minecraft:deepslate_gold_ore" to "radtech:gold_dust",
             "minecraft:nether_gold_ore" to "radtech:gold_dust"
         )
+
+        // Кешований прямий пошук за посиланням на Item (O(1), без створення об'єктів стрічок на купі пам'яті)
+        private val ITEM_LOOKUP: Map<Item, Item> by lazy {
+            RECIPES.mapNotNull { (inId, outId) ->
+                val inItem = BuiltInRegistries.ITEM.get(ResourceLocation.parse(inId))
+                val outItem = BuiltInRegistries.ITEM.get(ResourceLocation.parse(outId))
+                if (inItem != Items.AIR && outItem != Items.AIR) inItem to outItem else null
+            }.toMap()
+        }
     }
 }

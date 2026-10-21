@@ -68,27 +68,33 @@ class SolarPanelBlockEntity(pos: BlockPos, state: BlockState) :
         fun tick(level: Level, pos: BlockPos, state: BlockState, be: SolarPanelBlockEntity) {
             if (level.isClientSide) return
 
-            // Перевіряємо небо
-            val canSeeSky = level.canSeeSky(pos.above())
-            val isDay = level.isDay
-            val isRaining = level.isRaining
+            // Перевіряємо небо раз на 20 тіків (1 секунду), уникаючи raycast-перевірок щотакту
+            if (level.gameTime % 20L == 0L || (be.currentGenWatts == 0 && be.sunPercent == 0)) {
+                val canSeeSky = level.canSeeSky(pos.above())
+                val isDay = level.isDay
+                val isRaining = level.isRaining
 
-            val efficiency = when {
-                !canSeeSky || !isDay -> 0.0
-                isRaining -> 0.25
-                else -> 1.0
+                val efficiency = when {
+                    !canSeeSky || !isDay -> 0.0
+                    isRaining -> 0.25
+                    else -> 1.0
+                }
+
+                be.sunPercent = (efficiency * 100).toInt()
+                be.currentGenWatts = (efficiency * VOLTS * MAX_GEN_AMPS).toInt()
             }
 
-            be.sunPercent = (efficiency * 100).toInt()
-            val genWatts = (efficiency * VOLTS * MAX_GEN_AMPS).toInt()
-            be.currentGenWatts = genWatts
-
-            if (genWatts > 0) {
-                be.power.fill(genWatts.toLong())
+            if (be.currentGenWatts > 0) {
+                be.power.fill(be.currentGenWatts.toLong())
             }
 
-            PowerTransfer.push(level, pos, be.power)
-            be.setChanged()
+            if (be.power.stored > 0) {
+                PowerTransfer.push(level, pos, be.power)
+            }
+
+            if (level.gameTime % 80L == 0L) {
+                be.setChanged()
+            }
         }
     }
 }

@@ -92,6 +92,7 @@ class LithiumBatteryBlockEntity(pos: BlockPos, state: BlockState) :
             org.tim.radtech.energy.PowerTransfer.push(level, pos, be.power)
 
             // Заряджання/розряджання предметів у слотах
+            var itemTransferred = false
             val chargeStack = be.items.getStackInSlot(0)
             if (!chargeStack.isEmpty && chargeStack.item is IElectricItem) {
                 val electric = chargeStack.item as IElectricItem
@@ -101,6 +102,7 @@ class LithiumBatteryBlockEntity(pos: BlockPos, state: BlockState) :
                     val extracted = be.power.extract(toSend, false)
                     if (extracted > 0) {
                         electric.receive(chargeStack, extracted, false)
+                        itemTransferred = true
                     }
                 }
             }
@@ -114,6 +116,7 @@ class LithiumBatteryBlockEntity(pos: BlockPos, state: BlockState) :
                     val taken = electric.extract(dischargeStack, toTake, false)
                     if (taken > 0) {
                         be.power.receive(taken, false)
+                        itemTransferred = true
                     }
                 }
             }
@@ -129,8 +132,9 @@ class LithiumBatteryBlockEntity(pos: BlockPos, state: BlockState) :
                 be.heatTicks--
             }
 
+            val wasOverheated = state.getValue(LithiumBatteryBlock.OVERHEATED)
             val isOverheated = be.heatTicks >= OVERHEAT_THRESHOLD
-            if (state.getValue(LithiumBatteryBlock.OVERHEATED) != isOverheated) {
+            if (wasOverheated != isOverheated) {
                 level.setBlock(pos, state.setValue(LithiumBatteryBlock.OVERHEATED, isOverheated), 3)
             }
 
@@ -145,7 +149,9 @@ class LithiumBatteryBlockEntity(pos: BlockPos, state: BlockState) :
                 be.criticalOverheatTicks = (be.criticalOverheatTicks - 1).coerceAtLeast(0)
             }
 
-            be.setChanged()
+            if (itemTransferred || wasOverheated != isOverheated || level.gameTime % 80L == 0L) {
+                be.setChanged()
+            }
         }
     }
 }

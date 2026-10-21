@@ -104,10 +104,11 @@ class ThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             if (be.burnTime > 0 && hasRoom) {
                 be.burnTime--
                 be.power.fill(GENERATION)
-                changed = true
             }
-            if (PowerTransfer.push(level, pos, be.power) > 0) changed = true
-            if (changed) be.setChanged()
+            if (be.power.stored > 0) {
+                PowerTransfer.push(level, pos, be.power)
+            }
+            if (changed || level.gameTime % 60L == 0L) be.setChanged()
         }
     }
 }

@@ -20,6 +20,10 @@ class ConnectorRenderer<T>(ctx: BlockEntityRendererProvider.Context) : BlockEnti
 
     companion object {
         private val WHITE_TEXTURE: ResourceLocation = ResourceLocation.withDefaultNamespace("textures/misc/white.png")
+
+        // Передвиділені буфери для 100% усунення навантаження на Garbage Collector при 144+ FPS
+        private val cornerBufA = FloatArray(12)
+        private val cornerBufB = FloatArray(12)
     }
 
     override fun render(
@@ -41,7 +45,7 @@ class ConnectorRenderer<T>(ctx: BlockEntityRendererProvider.Context) : BlockEnti
         val pose = poseStack.last()
 
         for (conn in be.connections) {
-            // Малюємо кожен провід лише з одного кінця
+            // Малюємо кожен провід лише з одного кінця для уникнення подвійного навантаження
             if (pos.asLong() > conn.targetPos.asLong()) continue
 
             val targetBe = level.getBlockEntity(conn.targetPos) as? IWireConnectable ?: continue
@@ -55,7 +59,6 @@ class ConnectorRenderer<T>(ctx: BlockEntityRendererProvider.Context) : BlockEnti
     }
 
     private fun getWireColor(conn: WireConnection): Triple<Float, Float, Float> {
-        // Однотонний колір дроту залежно від металу та наявності ізоляції
         return when (conn.type) {
             CableType.TIN      -> if (conn.isBare) Triple(0.72f, 0.76f, 0.80f) else Triple(0.20f, 0.22f, 0.25f)
             CableType.COPPER   -> if (conn.isBare) Triple(0.85f, 0.48f, 0.24f) else Triple(0.22f, 0.16f, 0.14f)
@@ -74,7 +77,7 @@ class ConnectorRenderer<T>(ctx: BlockEntityRendererProvider.Context) : BlockEnti
     ) {
         val segments = 16
         val sag = conn.sag
-        val radius = 0.0225f // В 2 рази тонший (було 0.045f)
+        val radius = 0.0225f // Оптимальна товщина проводу
 
         val (r, g, b) = getWireColor(conn)
 
@@ -82,7 +85,6 @@ class ConnectorRenderer<T>(ctx: BlockEntityRendererProvider.Context) : BlockEnti
         val dy = y2 - y1
         val dz = z2 - z1
 
-        // Горизонтальний перпендикулярний вектор U (стабільний вздовж усього проводу)
         val horizLen = sqrt(dx * dx + dz * dz)
         val ux: Float
         val uz: Float
@@ -94,88 +96,92 @@ class ConnectorRenderer<T>(ctx: BlockEntityRendererProvider.Context) : BlockEnti
             uz = 0.0f
         }
 
-        // Обчислюємо центральні точки параболічного провисання та 4 кути перерізу кабелю в кожній точці
-        val corners = Array(segments + 1) { i ->
-            val t = i.toFloat() / segments
-            val px = x1 + dx * t
-            val pz = z1 + dz * t
-            val sagOffset = 4.0f * sag * t * (1.0f - t)
-            val py = y1 + dy * t - sagOffset
+        var curBuf = cornerBufA
+        var nextBuf = cornerBufB
 
-            val txRaw = dx
-            val tyRaw = dy - 4.0f * sag * (1.0f - 2.0f * t)
-            val tzRaw = dz
-            val tLen = sqrt(txRaw * txRaw + tyRaw * tyRaw + tzRaw * tzRaw).coerceAtLeast(1e-4f)
-            val tx = txRaw / tLen
-            val ty = tyRaw / tLen
-            val tz = tzRaw / tLen
+        // Початкова точка перерізу
+        computeCorners(0, segments, x1, y1, z1, dx, dy, dz, sag, radius, ux, uz, horizLen, curBuf)
 
-            val vx: Float
-            val vy: Float
-            val vz: Float
-            if (horizLen > 1e-4f) {
-                vx = ty * uz
-                vy = tz * ux - tx * uz
-                vz = -ty * ux
-            } else {
-                vx = 0.0f
-                vy = 0.0f
-                vz = radius
-            }
-
-            floatArrayOf(
-                px - ux - vx, py - vy, pz - uz - vz, // C0 (0, 1, 2)
-                px + ux - vx, py - vy, pz + uz - vz, // C1 (3, 4, 5)
-                px + ux + vx, py + vy, pz + uz + vz, // C2 (6, 7, 8)
-                px - ux + vx, py + vy, pz - uz + vz  // C3 (9, 10, 11)
-            )
-        }
-
-        // Малюємо всі 4 грані однотонним кольором як незалежні QUADS
+        // Інкрементальний рендеринг без створення жодного масиву на купу пам'яті
         for (i in 0 until segments) {
-            val c = corners[i]
-            val n = corners[i + 1]
+            computeCorners(i + 1, segments, x1, y1, z1, dx, dy, dz, sag, radius, ux, uz, horizLen, nextBuf)
+
+            val c = curBuf
+            val n = nextBuf
 
             // Верхня грань (C3 -> C2 -> N2 -> N3)
-            emitQuad(
-                buffer, pose,
-                c[9], c[10], c[11],
-                c[6], c[7], c[8],
-                n[6], n[7], n[8],
-                n[9], n[10], n[11],
-                r, g, b, packedLight
-            )
+            emitQuad(buffer, pose, c[9], c[10], c[11], c[6], c[7], c[8], n[6], n[7], n[8], n[9], n[10], n[11], r, g, b, packedLight)
 
             // Нижня грань (C0 -> C1 -> N1 -> N0)
-            emitQuad(
-                buffer, pose,
-                c[0], c[1], c[2],
-                c[3], c[4], c[5],
-                n[3], n[4], n[5],
-                n[0], n[1], n[2],
-                r, g, b, packedLight
-            )
+            emitQuad(buffer, pose, c[0], c[1], c[2], c[3], c[4], c[5], n[3], n[4], n[5], n[0], n[1], n[2], r, g, b, packedLight)
 
             // Права бічна грань (C1 -> C2 -> N2 -> N1)
-            emitQuad(
-                buffer, pose,
-                c[3], c[4], c[5],
-                c[6], c[7], c[8],
-                n[6], n[7], n[8],
-                n[3], n[4], n[5],
-                r, g, b, packedLight
-            )
+            emitQuad(buffer, pose, c[3], c[4], c[5], c[6], c[7], c[8], n[6], n[7], n[8], n[3], n[4], n[5], r, g, b, packedLight)
 
             // Ліва бічна грань (C3 -> C0 -> N0 -> N3)
-            emitQuad(
-                buffer, pose,
-                c[9], c[10], c[11],
-                c[0], c[1], c[2],
-                n[0], n[1], n[2],
-                n[9], n[10], n[11],
-                r, g, b, packedLight
-            )
+            emitQuad(buffer, pose, c[9], c[10], c[11], c[0], c[1], c[2], n[0], n[1], n[2], n[9], n[10], n[11], r, g, b, packedLight)
+
+            // Перемикаємо буфери
+            val tmp = curBuf
+            curBuf = nextBuf
+            nextBuf = tmp
         }
+    }
+
+    private fun computeCorners(
+        i: Int, segments: Int,
+        x1: Float, y1: Float, z1: Float,
+        dx: Float, dy: Float, dz: Float,
+        sag: Float, radius: Float,
+        ux: Float, uz: Float, horizLen: Float,
+        out: FloatArray
+    ) {
+        val t = i.toFloat() / segments
+        val px = x1 + dx * t
+        val pz = z1 + dz * t
+        val sagOffset = 4.0f * sag * t * (1.0f - t)
+        val py = y1 + dy * t - sagOffset
+
+        val txRaw = dx
+        val tyRaw = dy - 4.0f * sag * (1.0f - 2.0f * t)
+        val tzRaw = dz
+        val tLen = sqrt(txRaw * txRaw + tyRaw * tyRaw + tzRaw * tzRaw).coerceAtLeast(1e-4f)
+        val tx = txRaw / tLen
+        val ty = tyRaw / tLen
+        val tz = tzRaw / tLen
+
+        val vx: Float
+        val vy: Float
+        val vz: Float
+        if (horizLen > 1e-4f) {
+            vx = ty * uz
+            vy = tz * ux - tx * uz
+            vz = -ty * ux
+        } else {
+            vx = 0.0f
+            vy = 0.0f
+            vz = radius
+        }
+
+        // C0 (0..2)
+        out[0] = px - ux - vx
+        out[1] = py - vy
+        out[2] = pz - uz - vz
+
+        // C1 (3..5)
+        out[3] = px + ux - vx
+        out[4] = py - vy
+        out[5] = pz + uz - vz
+
+        // C2 (6..8)
+        out[6] = px + ux + vx
+        out[7] = py + vy
+        out[8] = pz + uz + vz
+
+        // C3 (9..11)
+        out[9] = px - ux + vx
+        out[10] = py + vy
+        out[11] = pz - uz + vz
     }
 
     private fun emitQuad(

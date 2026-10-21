@@ -228,13 +228,14 @@ class QuarryBlockEntity(pos: BlockPos, state: BlockState) :
                 var foundBlock = false
                 var attempts = 0
                 val maxAttemptsPerStep = 32
+                val mutablePos = BlockPos.MutableBlockPos()
 
                 while (!foundBlock && attempts < maxAttemptsPerStep && be.currentY >= level.minBuildHeight) {
-                    val targetPos = BlockPos(pos.x + be.currentRelX, be.currentY, pos.z + be.currentRelZ)
-                    val targetState = level.getBlockState(targetPos)
+                    mutablePos.set(pos.x + be.currentRelX, be.currentY, pos.z + be.currentRelZ)
+                    val targetState = level.getBlockState(mutablePos)
                     attempts++
 
-                    if (targetState.isAir || targetState.canBeReplaced() || targetState.getDestroySpeed(level, targetPos) < 0.0f) {
+                    if (targetState.isAir || targetState.canBeReplaced() || targetState.getDestroySpeed(level, mutablePos) < 0.0f) {
                         // Повітря, рідина або незламний блок (бедрок) — пропускаємо
                         advancePosition(be, level)
                     } else {
@@ -242,8 +243,9 @@ class QuarryBlockEntity(pos: BlockPos, state: BlockState) :
                         foundBlock = true
                         be.power.extract(ENERGY_PER_BLOCK, false)
 
-                        val drops = Block.getDrops(targetState, sLevel, targetPos, null)
-                        level.setBlock(targetPos, Blocks.AIR.defaultBlockState(), 3)
+                        val immutableTarget = mutablePos.immutable()
+                        val drops = Block.getDrops(targetState, sLevel, immutableTarget, null)
+                        level.setBlock(immutableTarget, Blocks.AIR.defaultBlockState(), 3)
                         be.blocksMined++
 
                         // Спершу пробуємо скинути предмети у сусідню скриню зверху або позаду

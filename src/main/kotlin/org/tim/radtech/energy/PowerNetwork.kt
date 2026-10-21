@@ -22,14 +22,20 @@ class PowerNetwork(
     fun tick(level: ServerLevel) {
         if (endpoints.size < 2) return
 
-        val storages = endpoints.mapNotNull { ep ->
-            if (level.isLoaded(ep.pos)) {
-                level.getCapability(PowerCapabilities.POWER, ep.pos, ep.side)
-            } else null
-        }.filter { it.tier == tier }
+        val sources = ArrayList<IPowerStorage>(endpoints.size)
+        val sinks = ArrayList<IPowerStorage>(endpoints.size)
 
-        val sources = storages.filter { it.maxOutputAmps > 0 && it.stored > 0 }
-        val sinks = storages.filter { it.maxInputAmps > 0 && it.stored < it.capacity }
+        for (ep in endpoints) {
+            if (!level.isLoaded(ep.pos)) continue
+            val cap = level.getCapability(PowerCapabilities.POWER, ep.pos, ep.side) ?: continue
+            if (cap.tier != tier) continue
+            if (cap.maxOutputAmps > 0 && cap.stored > 0) {
+                sources.add(cap)
+            }
+            if (cap.maxInputAmps > 0 && cap.stored < cap.capacity) {
+                sinks.add(cap)
+            }
+        }
 
         if (sources.isEmpty() || sinks.isEmpty()) return
 

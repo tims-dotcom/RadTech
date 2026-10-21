@@ -92,7 +92,14 @@ abstract class ProcessingMachineBlockEntity(
         fun tick(level: Level, pos: BlockPos, state: BlockState, be: ProcessingMachineBlockEntity) {
             if (level.isClientSide) return
             val input = be.items.getStackInSlot(0)
-            val recipe = if (input.isEmpty) null else be.findRecipe(input, level)
+            if (input.isEmpty) {
+                if (be.progress != 0) {
+                    be.progress = 0
+                    be.setChanged()
+                }
+                return
+            }
+            val recipe = be.findRecipe(input, level)
             if (recipe == null || recipe.result.isEmpty) {
                 if (be.progress != 0) {
                     be.progress = 0
@@ -111,7 +118,6 @@ abstract class ProcessingMachineBlockEntity(
                 be.items.extractItem(0, 1, false)
                 be.items.insertItem(1, recipe.result.copy(), false)
             }
-            be.setChanged()
         }
     }
 }

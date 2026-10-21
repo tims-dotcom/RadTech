@@ -100,18 +100,22 @@ class TransformerBlockEntity(pos: BlockPos, state: BlockState) :
             }
 
             // Роздача виходу
-            val facing = state.getValue(TransformerBlock.FACING)
-            val outSide = facing
-            val targetPos = pos.relative(outSide)
             val outStorage = if (be.mode == 0) be.highBuffer else be.lowBuffer
-            val target = level.getCapability(PowerCapabilities.POWER, targetPos, outSide.opposite)
-            if (target != null && target.tier == outStorage.tier) {
-                val toSend = outStorage.extract(outStorage.maxOutputPerTick, true)
-                val accepted = target.receive(toSend, false)
-                outStorage.extract(accepted, false)
+            if (outStorage.stored > 0) {
+                val facing = state.getValue(TransformerBlock.FACING)
+                val outSide = facing
+                val targetPos = pos.relative(outSide)
+                val target = level.getCapability(PowerCapabilities.POWER, targetPos, outSide.opposite)
+                if (target != null && target.tier == outStorage.tier) {
+                    val toSend = outStorage.extract(outStorage.maxOutputPerTick, true)
+                    val accepted = target.receive(toSend, false)
+                    outStorage.extract(accepted, false)
+                }
             }
 
-            be.setChanged()
+            if (level.gameTime % 60L == 0L) {
+                be.setChanged()
+            }
         }
     }
 }

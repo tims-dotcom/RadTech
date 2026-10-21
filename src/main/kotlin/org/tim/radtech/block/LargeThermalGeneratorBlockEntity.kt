@@ -136,6 +136,7 @@ class LargeThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                             be.maxBurnTime = fuelValue * 3 / 2 // 150% ефективність згоряння!
                             be.burnTime = be.maxBurnTime
                             stack.shrink(1)
+                            be.setChanged()
                             break
                         }
                     }
@@ -147,7 +148,9 @@ class LargeThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                 level.setBlock(pos, state.setValue(LargeThermalGeneratorBlock.LIT, isLit), 3)
             }
 
-            be.setChanged()
+            if (level.gameTime % 60L == 0L) {
+                be.setChanged()
+            }
         }
     }
 }
