@@ -40,6 +40,8 @@ import org.tim.radtech.block.LithiumBatteryBlock
 import org.tim.radtech.block.MachineBlock
 import org.tim.radtech.block.PanelMeterBlock
 import org.tim.radtech.block.PressBlock
+import org.tim.radtech.block.QuarryBlock
+import org.tim.radtech.block.QuarryFrameBlock
 import org.tim.radtech.block.RollingMillBlock
 import org.tim.radtech.block.SolarPanelBlock
 import org.tim.radtech.block.ThermalGeneratorBlock
@@ -47,6 +49,8 @@ import org.tim.radtech.block.TransformerBlock
 import org.tim.radtech.client.ClientEvents
 import org.tim.radtech.energy.CableType
 import org.tim.radtech.energy.PowerNetworks
+import org.tim.radtech.item.ElectricChainsawItem
+import org.tim.radtech.item.ElectricDrillItem
 import org.tim.radtech.item.GuideBookItem
 import org.tim.radtech.item.MultimeterItem
 import org.tim.radtech.item.WireCoilItem
@@ -246,6 +250,30 @@ class Radtech(modEventBus: IEventBus) {
         )
         val TRANSFORMER_ITEM = ITEMS.registerSimpleBlockItem(TRANSFORMER_BLOCK)
 
+        // Мультиблочний кар'єр (Quarry)
+        val QUARRY_BLOCK: DeferredBlock<QuarryBlock> = BLOCKS.registerBlock(
+            "quarry",
+            { p -> QuarryBlock(p) },
+            BlockBehaviour.Properties.of().strength(5.0f, 6.0f).requiresCorrectToolForDrops()
+        )
+        val QUARRY_ITEM = ITEMS.registerSimpleBlockItem(QUARRY_BLOCK)
+
+        val QUARRY_FRAME_BLOCK: DeferredBlock<QuarryFrameBlock> = BLOCKS.registerBlock(
+            "quarry_frame",
+            { p -> QuarryFrameBlock(p) },
+            BlockBehaviour.Properties.of().strength(5.0f, 6.0f).requiresCorrectToolForDrops()
+        )
+        val QUARRY_FRAME_ITEM = ITEMS.registerSimpleBlockItem(QUARRY_FRAME_BLOCK)
+
+        // Електроінструменти (працюють на заряді)
+        val ELECTRIC_DRILL: DeferredItem<ElectricDrillItem> = ITEMS.register("electric_drill") { ->
+            ElectricDrillItem(Item.Properties().stacksTo(1))
+        }
+
+        val ELECTRIC_CHAINSAW: DeferredItem<ElectricChainsawItem> = ITEMS.register("electric_chainsaw") { ->
+            ElectricChainsawItem(Item.Properties().stacksTo(1))
+        }
+
         // Окрема вкладка мода RadTech у креативному інвентарі
         val RADTECH_TAB: DeferredHolder<CreativeModeTab, CreativeModeTab> = CREATIVE_MODE_TABS.register("radtech_tab") { ->
             CreativeModeTab.builder()
@@ -256,6 +284,8 @@ class Radtech(modEventBus: IEventBus) {
                     output.accept(GUIDE_BOOK.get())
                     output.accept(MULTIMETER.get())
                     output.accept(WIRE_CUTTER.get())
+                    output.accept(ELECTRIC_DRILL.get())
+                    output.accept(ELECTRIC_CHAINSAW.get())
                     output.accept(CONNECTOR_ITEM.get())
                     output.accept(INDUSTRIAL_LAMP_ITEM.get())
                     output.accept(PANEL_METER_ITEM.get())
@@ -268,6 +298,8 @@ class Radtech(modEventBus: IEventBus) {
                     output.accept(THERMAL_GENERATOR_ITEM.get())
                     output.accept(LARGE_THERMAL_GEN_ITEM.get())
                     output.accept(BOILER_CASING_ITEM.get())
+                    output.accept(QUARRY_ITEM.get())
+                    output.accept(QUARRY_FRAME_ITEM.get())
                     output.accept(MACHINE_ITEM.get())
                     output.accept(FURNACE_ITEM.get())
                     output.accept(PRESS_ITEM.get())

@@ -10,7 +10,12 @@ import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.neoforged.neoforge.items.ItemStackHandler
+import net.neoforged.neoforge.items.SlotItemHandler
+import org.tim.radtech.block.BatteryBlockEntity
+import org.tim.radtech.block.LithiumBatteryBlockEntity
 import org.tim.radtech.energy.PowerSync
+import org.tim.radtech.item.IElectricItem
 import org.tim.radtech.registry.ModMenus
 
 class BatteryMenu(id: Int, inv: Inventory, val be: BlockEntity, val data: ContainerData) :
@@ -30,7 +35,17 @@ class BatteryMenu(id: Int, inv: Inventory, val be: BlockEntity, val data: Contai
     val heatTicks: Int get() = data.get(5)
     val isOverheated: Boolean get() = data.get(6) == 1
 
+    val items: ItemStackHandler = when (be) {
+        is BatteryBlockEntity -> be.items
+        is LithiumBatteryBlockEntity -> be.items
+        else -> ItemStackHandler(2)
+    }
+
     init {
+        // Слоти акумулятора (0: Зарядка ⚡+, 1: Розрядка ⚡−)
+        addSlot(SlotItemHandler(items, 0, 146, 25))
+        addSlot(SlotItemHandler(items, 1, 146, 47))
+
         // Інвентар гравця
         for (r in 0..2) {
             for (c in 0..8) {
@@ -43,7 +58,27 @@ class BatteryMenu(id: Int, inv: Inventory, val be: BlockEntity, val data: Contai
         addDataSlots(data)
     }
 
-    override fun quickMoveStack(player: Player, index: Int): ItemStack = ItemStack.EMPTY
+    override fun quickMoveStack(player: Player, index: Int): ItemStack {
+        var result = ItemStack.EMPTY
+        val slot = slots[index]
+        if (slot.hasItem()) {
+            val stack = slot.item
+            result = stack.copy()
+            if (index < 2) {
+                // Зі слотів акумулятора в інвентар гравця
+                if (!moveItemStackTo(stack, 2, slots.size, true)) return ItemStack.EMPTY
+            } else {
+                // З інвентаря в слоти акумулятора
+                if (stack.item is IElectricItem) {
+                    if (!moveItemStackTo(stack, 0, 1, false)) return ItemStack.EMPTY
+                } else {
+                    return ItemStack.EMPTY
+                }
+            }
+            if (stack.isEmpty) slot.set(ItemStack.EMPTY) else slot.setChanged()
+        }
+        return result
+    }
 
     override fun stillValid(player: Player): Boolean =
         stillValid(ContainerLevelAccess.create(be.level!!, be.blockPos), player, be.blockState.block)

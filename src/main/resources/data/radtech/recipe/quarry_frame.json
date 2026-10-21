@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PIP",
+    "IAI",
+    "PIP"
+  ],
+  "key": {
+    "P": { "item": "radtech:iron_plate" },
+    "I": { "item": "radtech:aluminum_plate" },
+    "A": { "item": "radtech:machine_casing" }
+  },
+  "result": {
+    "id": "radtech:quarry_frame",
+    "count": 4
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "radtech:block/boiler_casing",
+    "down": "radtech:block/boiler_casing",
+    "up": "radtech:block/boiler_casing",
+    "north": "radtech:block/quarry_front",
+    "south": "radtech:block/boiler_casing",
+    "west": "radtech:block/boiler_casing",
+    "east": "radtech:block/boiler_casing"
+  }
+}

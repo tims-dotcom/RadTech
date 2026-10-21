@@ -10,6 +10,7 @@ import org.tim.radtech.menu.BatteryMenu
 import org.tim.radtech.menu.CircuitBreakerMenu
 import org.tim.radtech.menu.LargeThermalGeneratorMenu
 import org.tim.radtech.menu.ProcessingMenu
+import org.tim.radtech.menu.QuarryMenu
 import org.tim.radtech.menu.SolarPanelMenu
 import org.tim.radtech.menu.ThermalGeneratorMenu
 import org.tim.radtech.menu.TransformerMenu
@@ -65,5 +66,10 @@ object ModMenus {
     val TRANSFORMER: DeferredHolder<MenuType<*>, MenuType<TransformerMenu>> =
         MENUS.register("transformer") { ->
             IMenuTypeExtension.create { id, inv, buf -> TransformerMenu(id, inv, buf) }
+        }
+
+    val QUARRY: DeferredHolder<MenuType<*>, MenuType<QuarryMenu>> =
+        MENUS.register("quarry") { ->
+            IMenuTypeExtension.create { id, inv, buf -> QuarryMenu(id, inv, buf) }
         }
 }

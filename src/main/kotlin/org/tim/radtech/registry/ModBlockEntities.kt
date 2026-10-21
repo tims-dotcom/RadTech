@@ -19,6 +19,7 @@ import org.tim.radtech.block.LithiumBatteryBlockEntity
 import org.tim.radtech.block.MachineBlockEntity
 import org.tim.radtech.block.PanelMeterBlockEntity
 import org.tim.radtech.block.PressBlockEntity
+import org.tim.radtech.block.QuarryBlockEntity
 import org.tim.radtech.block.RollingMillBlockEntity
 import org.tim.radtech.block.SolarPanelBlockEntity
 import org.tim.radtech.block.ThermalGeneratorBlockEntity
@@ -97,6 +98,14 @@ object ModBlockEntities {
             BlockEntityType.Builder.of(
                 BlockEntityType.BlockEntitySupplier { pos, state -> TransformerBlockEntity(pos, state) },
                 Radtech.TRANSFORMER_BLOCK.get()
+            ).build(null)
+        }
+
+    val QUARRY: DeferredHolder<BlockEntityType<*>, BlockEntityType<QuarryBlockEntity>> =
+        TYPES.register("quarry") { ->
+            BlockEntityType.Builder.of(
+                BlockEntityType.BlockEntitySupplier { pos, state -> QuarryBlockEntity(pos, state) },
+                Radtech.QUARRY_BLOCK.get()
             ).build(null)
         }
 

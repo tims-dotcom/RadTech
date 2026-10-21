@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,lit=false": { "model": "radtech:block/quarry" },
+    "facing=south,lit=false": { "model": "radtech:block/quarry", "y": 180 },
+    "facing=west,lit=false":  { "model": "radtech:block/quarry", "y": 270 },
+    "facing=east,lit=false":  { "model": "radtech:block/quarry", "y": 90 },
+    "facing=north,lit=true":  { "model": "radtech:block/quarry_lit" },
+    "facing=south,lit=true":  { "model": "radtech:block/quarry_lit", "y": 180 },
+    "facing=west,lit=true":   { "model": "radtech:block/quarry_lit", "y": 270 },
+    "facing=east,lit=true":   { "model": "radtech:block/quarry_lit", "y": 90 }
+  }
+}

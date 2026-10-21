@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " W ",
+    "PIP",
+    "LCL"
+  ],
+  "key": {
+    "W": { "item": "radtech:tungsten_element" },
+    "P": { "item": "radtech:titanium_plate" },
+    "I": { "item": "radtech:electric_motor" },
+    "L": { "item": "radtech:lithium_cell" },
+    "C": { "item": "radtech:electronic_circuit" }
+  },
+  "result": {
+    "id": "radtech:electric_drill",
+    "count": 1
+  }
+}

@@ -33,6 +33,15 @@ class BatteryScreen(menu: BatteryMenu, inv: Inventory, title: Component) :
         if (heatH > 0) {
             g.blit(TEXTURE, leftPos + 38, topPos + 25 + 40 - heatH, 192, 40 - heatH, 8, heatH)
         }
+
+        // 3. Слоти зарядки та розрядки інструментів праворуч
+        // Слот 0: Зарядка (146, 25)
+        g.fill(leftPos + 145, topPos + 24, leftPos + 163, topPos + 42, 0xFF2B384E.toInt())
+        g.fill(leftPos + 146, topPos + 25, leftPos + 162, topPos + 41, 0xFF101218.toInt())
+
+        // Слот 1: Розрядка (146, 47)
+        g.fill(leftPos + 145, topPos + 46, leftPos + 163, topPos + 64, 0xFF2B384E.toInt())
+        g.fill(leftPos + 146, topPos + 47, leftPos + 162, topPos + 63, 0xFF101218.toInt())
     }
 
     override fun renderLabels(g: GuiGraphics, mouseX: Int, mouseY: Int) {
@@ -64,6 +73,10 @@ class BatteryScreen(menu: BatteryMenu, inv: Inventory, title: Component) :
             "СТАН: НОРМА" to 0x55FF55
         }
         g.drawString(font, statusText, 54, 58, statusColor, false)
+
+        // Підписи над слотами зарядки
+        g.drawString(font, "§e⚡+", 148, 14, 0xFFFF55, false)
+        g.drawString(font, "§b⚡−", 148, 66, 0x55FFFF, false)
     }
 
     override fun render(g: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {

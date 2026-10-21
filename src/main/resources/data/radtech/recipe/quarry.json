@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "TET",
+    "MCM",
+    "DWD"
+  ],
+  "key": {
+    "T": { "item": "radtech:titanium_plate" },
+    "E": { "item": "radtech:electronic_circuit" },
+    "M": { "item": "radtech:electric_motor" },
+    "C": { "item": "radtech:machine_casing" },
+    "D": { "item": "minecraft:diamond_block" },
+    "W": { "item": "radtech:tungsten_element" }
+  },
+  "result": {
+    "id": "radtech:quarry",
+    "count": 1
+  }
+}

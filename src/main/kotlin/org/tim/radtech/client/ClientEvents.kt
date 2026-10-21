@@ -17,11 +17,13 @@ object ClientEvents {
         e.register(ModMenus.CIRCUIT_BREAKER.get()) { menu, inv, title -> CircuitBreakerScreen(menu, inv, title) }
         e.register(ModMenus.SOLAR_PANEL.get()) { menu, inv, title -> SolarPanelScreen(menu, inv, title) }
         e.register(ModMenus.TRANSFORMER.get()) { menu, inv, title -> TransformerScreen(menu, inv, title) }
+        e.register(ModMenus.QUARRY.get()) { menu, inv, title -> QuarryScreen(menu, inv, title) }
     }
 
     fun onRegisterRenderers(e: EntityRenderersEvent.RegisterRenderers) {
         e.registerBlockEntityRenderer(ModBlockEntities.CONNECTOR.get()) { ctx -> ConnectorRenderer(ctx) }
         e.registerBlockEntityRenderer(ModBlockEntities.LAMP.get()) { ctx -> ConnectorRenderer(ctx) }
+        e.registerBlockEntityRenderer(ModBlockEntities.QUARRY.get()) { ctx -> ConnectorRenderer(ctx) }
     }
 }
 

@@ -16,6 +16,7 @@ import net.neoforged.neoforge.items.ItemStackHandler
 import org.tim.radtech.energy.PowerBuffer
 import org.tim.radtech.energy.PowerSync
 import org.tim.radtech.energy.VoltageTier
+import org.tim.radtech.item.IElectricItem
 import org.tim.radtech.menu.BatteryMenu
 import org.tim.radtech.registry.ModBlockEntities
 
@@ -89,6 +90,33 @@ class LithiumBatteryBlockEntity(pos: BlockPos, state: BlockState) :
             if (level.isClientSide) return
 
             org.tim.radtech.energy.PowerTransfer.push(level, pos, be.power)
+
+            // Заряджання/розряджання предметів у слотах
+            val chargeStack = be.items.getStackInSlot(0)
+            if (!chargeStack.isEmpty && chargeStack.item is IElectricItem) {
+                val electric = chargeStack.item as IElectricItem
+                val space = electric.capacity - electric.getStored(chargeStack)
+                if (space > 0 && be.power.stored > 0) {
+                    val toSend = minOf(space, 8_000L, be.power.stored)
+                    val extracted = be.power.extract(toSend, false)
+                    if (extracted > 0) {
+                        electric.receive(chargeStack, extracted, false)
+                    }
+                }
+            }
+            val dischargeStack = be.items.getStackInSlot(1)
+            if (!dischargeStack.isEmpty && dischargeStack.item is IElectricItem) {
+                val electric = dischargeStack.item as IElectricItem
+                val stored = electric.getStored(dischargeStack)
+                val space = be.power.capacity - be.power.stored
+                if (stored > 0 && space > 0) {
+                    val toTake = minOf(stored, 8_000L, space)
+                    val taken = electric.extract(dischargeStack, toTake, false)
+                    if (taken > 0) {
+                        be.power.receive(taken, false)
+                    }
+                }
+            }
 
             val currentAmps = be.power.flowAccumulator.toDouble() / VoltageTier.INDUSTRIAL.volts
             be.lastAmps = currentAmps
